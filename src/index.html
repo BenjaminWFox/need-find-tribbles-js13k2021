@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=.75, user-scalable=no">
+  <title>Frontiers | Benjamin Fox | js13k 2021</title>
+</head>
+
+<body>
+  <div class="wrapper" style="max-width: 550px; margin: 0 auto;text-align: center; opacity: 0;">
+    <div class="space" style="opacity: 0;">
+      <div class="shuttle">
+        <img src="../src/assets/images/shuttlesm.png" />
+      </div>
+      <div id="ld" class="ld">
+        <img src="../src/assets/images/lander.png" />
+      </div>
+    </div>
+    <div id="game">
+      <div class="rW" style="align-items: center; border-bottom: 1px black solid; margin: 0 0 10px;">
+        <h1 style="margin: 0;">FRONTIERS</h1>
+        <div id="working" style="font-weight: bold;">0 / 0 working</div>
+      </div>
+      <div class="matW">
+        <div>
+          <div class="mat cr x2"></div>
+          <span id="fA">0</span>
+        </div>
+        <div>
+          <div class="mat rk x2"></div>
+          <span id="mA">0</span>
+        </div>
+        <div>
+          <div class="mat lb x2"></div>
+          <span id="lA">0</span>
+        </div>
+      </div>
+      <div id="hR" class="region">
+        <div class="b st"></div>
+        <div class="b gb"></div>
+        <div class="tr1 t30"></div>
+        <div class="tr2 t31"></div>
+        <div class="tr1 t32"></div>
+        <div class="tr2 t33"></div>
+        <div class="tr1 t34"></div>
+        <div class="tr2 t35"></div>
+        <div class="tr2 t37"></div>
+      </div>
+      <div class="rW">
+        <div id="tLR" class="region" style="width: 49%;">
+          <div class="b st"></div>
+          <div class="b gb"></div>
+        </div>
+        <div id="tRR" class="region" style="width: 49%;">
+          <div class="b st"></div>
+          <div class="b gb"></div>
+          <div class="rv rv1">
+            <div class="wa"></div>
+            <div class="br"></div>
+          </div>
+          <div class="rv rv2">
+            <div class="wa"></div>
+            <div class="br"></div>
+          </div>
+          <div class="rv rv3">
+            <div class="wa"></div>
+            <div class="br"></div>
+          </div>
+          <div class="rv rv4">
+            <div class="wa"></div>
+            <div class="br"></div>
+          </div>
+          <div class="rv rv5">
+            <div class="wa"></div>
+            <div class="br"></div>
+          </div>
+          <div class="tr1 t41"></div>
+          <div class="tr2 t42"></div>
+          <div class="tr1 t43"></div>
+          <div class="tr2 t44"></div>
+          <div class="tr1 t45"></div>
+        </div>
+      </div>
+      <div class="rW">
+        <div id="fR" class="region" style="width: 32%;">
+          <div class="b st"></div>
+          <div class="b gb"></div>
+          <div class="b full">
+            <img class="bg" src="../src/assets/images/farmbg.png" />
+            <div class="a cr x2" style="bottom: 7px; left: 22px;"></div>
+            <div class="a cr" style="bottom: 18px; left: 62px;"></div>
+            <div class="a cr" style="bottom: 14px; left: 106px;"></div>
+            <div class="a cr x2" style="bottom: 9px; left: 146px;"></div>
+          </div>
+        </div>
+        <div id="mR" class="region" style="width: 32%;">
+          <div class="b st"></div>
+          <div class="b gb"></div>
+          <div class="b full">
+            <div class="a rk x3" style="bottom: 7px; left: 42px;"></div>
+            <div class="a rk x2" style="bottom: 14px; left: 65px;"></div>
+            <div class="a rk" style="bottom: 17px; left: 82px;"></div>
+            <div class="a rk" style="bottom: 20px; left: 90px;"></div>
+            <div class="a rk" style="bottom: 18px; left: 96px;"></div>
+            <div class="a rk x2" style="bottom: 14px; left: 106px;"></div>
+            <div class="a rk x3" style="bottom: 9px; left: 126px;"></div>
+          </div>
+        </div>
+        <div id="lR" class="region" style="width: 32%;">
+          <div class="b st"></div>
+          <div class="b gb"></div>
+          <div class="b full">
+            <img class="bg" src="../src/assets/images/labbg.png" />
+            <div class="a lb" style="bottom: 16px; left: 62px;"></div>
+            <div class="a lb x2" style="bottom: 17px; left: 103px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="rW" style="margin-bottom: 10px;">
+        <div style="width: 32%;">
+          <button id="farm-add" class="aB">+</button>
+          <span id="fC" class="aC">0</span>
+          <button id="farm-sub" class="aB">–</button>
+        </div>
+        <div style="width: 32%;">
+          <button id="mine-add" class="aB">+</button>
+          <span id="mC" class="aC">0</span>
+          <button id="mine-sub" class="aB">–</button>
+        </div>
+        <div style="width: 32%;">
+          <button id="labs-add" class="aB">+</button>
+          <span id="lC" class="aC">0</span>
+          <button id="labs-sub" class="aB">–</button>
+        </div>
+      </div>
+      <div id="mBs">
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
