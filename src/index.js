@@ -797,11 +797,3 @@ window.onload = () => {
         test(`Ghost${iter}`, 'A random pixel art!', `ghost${iter}.${ext}`, sprite.canvas.toDataURL(type, 1.0))
     })
 }
-
-// ipfs://bafyreidcv5ywq6ltzimxnjq6z2s2e2hta223njefz2y5z3jxkdj3lc65zi/metadata.json
-
-/*
-
-curl -X POST --data-binary @shuttlesm.png -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDE3RTBEMTBCMEU0MmI5NmJhOTY5MDcwZUZFNDVBZkY0MDkzMDY5ODciLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYzMDc5Mzk4MTEwMiwibmFtZSI6ImJmLWpzMTNrLTIwMjEtYXBpa2V5In0.XhmhgIFuobjinEiRnb8ZtEEWvNu9SJEVjQ2J6I6tAZ8' https://api.nft.storage/upload
-https://ipfs.io/ipfs/bafkreifieq66vs6xy27eaayk7kishe3ue2hiajaj7pqvgzx7nlr6fhi6vi/metadata.json
-*/
