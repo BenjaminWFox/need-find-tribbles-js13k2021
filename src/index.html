@@ -2,16 +2,31 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=.75, user-scalable=no">
-  <title>Frontiers | Benjamin Fox | js13k 2021</title>
+  <meta name="monetization" content="$coil.xrptipbot.com/[COIL-ID-HERE]">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+  
+  <title>[js13Kgames]</title>
 </head>
 
-<body>
-  <div class="wrapper" style="max-width: 550px; margin: 0 auto;text-align: center; opacity: 0;">
-    
+<body style="background-color: #111;">
+  <div id="wrapper">
+    <div id="cvWrap">
+      <canvas id="canvas" width="1000" height="1000"></canvas>
+    </div>
+    <div>
+      <div id="panel">
+        <div id="debug" style="padding: 15px; color: #fff">
+          <input type="file" id="upload" name="imgUpload" />
+          <input type="text" id="name" placeholder="Filename" />
+          <input type="text" id="desc" placeholder="Description" />
+          <input type="submit" id="submit" />
+        </div>
+        <button id="login">LOGIN</button>
+        <button id="logout">LOGOUT</button>
+      </div>
+    </div>
   </div>
-  <input type="file" id="upload" name="imgUpload">
-  <input type="submit" id="submit">
+  <script src="https://js13kgames.com/src/near-api-js.js" type="text/javascript"></script>
 </body>
 
 </html>
