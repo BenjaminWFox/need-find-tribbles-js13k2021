@@ -1,0 +1,19 @@
+{
+  "name": "near-protocol",
+  "version": "1.0.0",
+  "description": "### Step 1",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bn.js": "^5.2.0",
+    "borsh": "^0.4.0",
+    "near-api-js": "^0.42.0"
+  }
+}

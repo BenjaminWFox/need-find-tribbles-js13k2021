@@ -1,0 +1,22 @@
+{
+  "name": "process-images",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "set NODE_ENV=dev && node index.js",
+    "mint": "set NODE_ENV=dev && node mint-nfts.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.983.0",
+    "dotenv": "^10.0.0",
+    "line-by-line": "^0.1.6",
+    "nft.storage": "^3.2.0",
+    "stream-to-array": "^2.3.0",
+    "uuid": "^8.3.2"
+  }
+}

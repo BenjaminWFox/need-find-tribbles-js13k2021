@@ -31,7 +31,7 @@ const gearZones = {}
 const otherZones = {}
 
 const addHotCoords = (n, j, i) => {
-  if (n > 500 && n < 511) {
+  if (n > 504 && n < 515) {
     keyZones[`${j}-${i}`] = true
   }
   if (n > 600 && n < 700) {
@@ -71,6 +71,14 @@ const colorCanvas = (ctx) => {
 
     map.push(row)
   }
+
+  const keyStr = Object.keys(keyZones).join(',')
+
+  console.log('Key Zones', Object.keys(keyZones).length) // 10048
+  console.log('Gear Zones', Object.keys(gearZones).length) // 98464
+  console.log('Other Zones', Object.keys(otherZones).length) // 99027
+
+  console.log(keyStr)
 }
 
 function getCursorPosition(canvas, event) {
@@ -91,48 +99,6 @@ function getCursorPosition(canvas, event) {
     console.log(`x: ${ x } y: ${ y}`)
   }
 }
-
-let nearConfig
-let near
-let walletConnection
-let accountId
-let contract
-
-function signInNear(wallet) {
-  walletConnection.requestSignIn(nearConfig.contractName)
-}
-
-function signOutNear(wallet) {
-  walletConnection.signOut()
-
-  window.location.replace(window.location.origin + window.location.pathname)
-}
-
-async function configureNear() {
-  nearConfig = {
-    networkId: 'testnet',
-    contractName: 'bwf-js13k-2021.testnet',
-    nodeUrl: 'https://rpc.testnet.near.org',
-    walletUrl: 'https://wallet.testnet.near.org',
-    helperUrl: 'https://helper.testnet.near.org',
-    explorerUrl: 'https://explorer.testnet.near.org',
-  }
-
-  // connect to NEAR
-  near = await nearApi.connect(Object.assign({ deps: { keyStore: new nearApi.keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
-
-  walletConnection = new nearApi.WalletConnection(near)
-
-  accountId = walletConnection.getAccountId()
-
-  contract = await new nearApi.Contract(window.walletConnection.accountId(), nearConfig.contractName, {
-    viewMethods: [],
-    changeMethods: ['nft_mint'],
-  })
-
-  console.log('NEAR Done:', near, wallet)
-}
-
 window.onload = () => {
   console.log(window.nearApi)
 
@@ -146,12 +112,9 @@ window.onload = () => {
   canvas.addEventListener('mousedown', function (e) {
     getCursorPosition(canvas, e)
   })
-  loginBtn.addEventListener('click', signInNear)
-  logoutBtn.addEventListener('click', signOutNear)
 
   colorCanvas(ctx)
 
   console.log('Complete', keyZones, Object.keys(gearZones).length, Object.keys(otherZones).length)
 
-  configureNear()
 }
