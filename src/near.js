@@ -1,3 +1,4 @@
+import { modClassById } from './docui'
 // redirects user to wallet to authorize your dApp
 // this creates an access key that will be stored in the browser's local storage
 // access key can then be used to connect to NEAR and sign transactions via keyStore
@@ -82,6 +83,8 @@ export async function doNearStuff() {
   if (wallet.isSignedIn()) {
     console.log('IS SIGNED IN!', wallet.getAccountId())
 
+    modClassById(true, 'b', 'authd')
+
     account = await near.account(wallet._authData.accountId)
     contract = new nearAPI.Contract(
       account, // the account object that is connecting
@@ -93,6 +96,9 @@ export async function doNearStuff() {
         sender: account, // account object to initialize and sign transactions.
       },
     )
+  }
+  else {
+    modClassById(false, 'b', 'authd')
   }
 
   // account = await near.account('need-find-tribbles-js13k.testnet')

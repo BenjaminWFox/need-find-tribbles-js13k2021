@@ -8,24 +8,28 @@
   <title>[js13Kgames]</title>
 </head>
 
-<body style="background-color: #111;">
+<body id="b" style="background-color: #111;">
   <div id="wrapper">
     <div id="top">
       <div id="cvWrap"><canvas id="canvas" width="1000" height="1000"></canvas></div>
       <div id="panel">
-        <h1 class="c">Need <sub>to</sub> Find <sub>the</sub> Tribbles</h1>
+        <h1>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h1>
+        <p class="smtext nauth">No account detected - <button class="textlike" onclick="_fn.signIn()">Sign In</button></p>
+        <p class="smtext yauth">Account: need-find-tribbles-js13k.testnet - <button class="textlike" onclick="_fn.signOut()">Sign Out</button></p>
         <div id="display"></div>
         <div id="details">
-          <div class="c info" id="trib">
+          <div class="info" id="trib">
             <h2>You Found a Tribble!!</h2>
+            <span id="tid">Tribble_R1_361-823</span>
             <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
-            <button id="claim" class="important">CLAIM TRIBBLE</button>
-            <p>ID: Tribble_R1_361-823</p>
-            <p><a href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json" target="_blank">Metadata on IPFS from NFT.storage</a></p>
-            <p><a href="https://ipfs.io/ipfs/bafybeidvqna4qkowxzzcqhg6kdzdazvoeyuerp2ag4johd7ueeevmb4gze/Tribble_R1_526-890.png" target="_blank">Image on IPFS from NFT.storage</a></p>
+            <button id="claim" onclick="() => { window._fn.claimNFT() }" class="important">CLAIM TRIBBLE</button>
+            <br/><br/>
+            <h3>View:</h3>
+            <p><a href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json" target="_blank">Metadata from NFT.storage via IPFS</a></p>
+            <p><a href="https://ipfs.io/ipfs/bafybeidvqna4qkowxzzcqhg6kdzdazvoeyuerp2ag4johd7ueeevmb4gze/Tribble_R1_526-890.png" target="_blank">Image from NFT.storage via IPFS</a></p>
           </div>
           <br /><br /><br /><br />
-          <div class="c info" id="auth">
+          <div class="info" id="auth">
             <p>You'll need to log in to collect tribbles!</p>
             <p>This dapp runs on the <a href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account" target="_blank">Near testnet</a>,
             <br />
@@ -35,13 +39,12 @@
             <a href="https://wallet.testnet.near.org"/>https://wallet.testnet.near.org/</a>
             </p>
             <p>
-            Or <button id="login" class="inline">LOGIN</button>
+            Or <button id="login" class="inline" onclick="_fn.signIn()">LOGIN</button>
             </p>
             <p><button id="logout">LOGOUT</button>
             </p>
           </div>
         </div>
-
         <!-- <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button> -->
         <!-- <label for="tid">Token ID:</label>
         <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" /> -->

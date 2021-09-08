@@ -13,11 +13,13 @@ import C from './constants'
 function randomIntInclusive(min, max) { // min and max included
   return Math.floor((Math.random() * (max - min + 1)) + min)
 }
-
 // function randomIntFromTuple(arr) { // min and max included
 //   return Math.floor((Math.random() * (arr[1] - arr[0] + 1)) + arr[0])
 // }
 
+/**
+ * EVENTS
+ */
 const util = {
   getRandomKeyPoint: () => {
     const zoneKeys = Object.keys(keyZones)
@@ -136,13 +138,15 @@ window.onload = async () => {
   console.log('NEARAPI', window.nearApi)
 
   await doNearStuff()
-
-  const loginBtn = document.getElementById('login')
-  const logoutBtn = document.getElementById('logout')
-  const claimBtn = document.getElementById('claim')
   // const viewBtn = document.getElementById('view')
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
+
+  window._fn = {
+    signIn,
+    signOut,
+    claimNFT,
+  }
 
   canvas.width = dims
   canvas.height = dims
@@ -152,20 +156,6 @@ window.onload = async () => {
 
     util.showTribble(p)
   })
-  loginBtn.addEventListener('click', () => signIn())
-  logoutBtn.addEventListener('click', () => signOut())
-  claimBtn.addEventListener('click', (e) => {
-    const id = document.getElementById('tid').value
-    // const acct = document.getElementById('acct').value
-
-    claimNFT(id)
-  })
-
-  // viewBtn.addEventListener('click', (e) => {
-  //   const id = document.getElementById('tid').value
-
-  //   viewNFT(id)
-  // })
 
   colorCanvas(ctx)
 

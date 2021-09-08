@@ -19,7 +19,8 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul, a {
   color: #fff;
 }
 
-a:hover {
+a:hover, button.textlike:hover {
+  background-color: transparent;
   color: #ddd;
 }
 
@@ -59,6 +60,13 @@ button {
   padding: 10px 12px;
   cursor: pointer;
 }
+button.textlike {
+  border: none;
+  padding: 0;
+  margin: none;
+  display: inline-block;
+  text-decoration: underline;
+}
 
 button:hover {
   background-color: #333;
@@ -73,12 +81,28 @@ button.inline {
   margin: 0px 4px;
 }
 
-.c {
-  text-align: center;
+.nauth {
+  display: unset;
+}
+
+.yauth {
+  display: none;
+}
+
+.authd .yauth {
+  display: unset;
+}
+
+.authd .nauth {
+  display: none;
 }
 
 .info > * {
   margin-top: 15px;
+}
+
+.smtext {
+  font-size: .75rem;
 }
 
 #wrapper, #top {
@@ -87,7 +111,8 @@ button.inline {
 }
 
 #display {
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   height: 300px;
   border: 1px solid;
   margin: 0 auto;
@@ -127,6 +152,12 @@ button.inline {
   max-height: 100vh;
   padding: 20px 10px;
   margin: 0 auto;
+}
+
+#tid {
+  font-weight: 600;
+  font-style: italic;
+  display: inline-block;
 }
 
 /* Landscape */
