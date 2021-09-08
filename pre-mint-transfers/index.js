@@ -31,6 +31,21 @@ const [nodePath, indexPath, filesPath] = argv
 let pending = 0
 const execCallsArray = []
 
+// function dataURLtoFile(dataurl, filename) {
+
+//   let arr = dataurl.split(',')
+//   let mime = arr[0].match(/:(.*?);/)[1]
+//   let bstr = atob(arr[1])
+//   let n = bstr.length
+//   let u8arr = new Uint8Array(n)
+
+//   while (n--) {
+//     u8arr[n] = bstr.charCodeAt(n)
+//   }
+
+//   return new File([u8arr], filename, { type: mime })
+// }
+
 const buildNftCallObject = (nftData) => {
   const nftCall = {
     token_id: '',
@@ -175,7 +190,7 @@ const processFiles = async () => {
   // for (let i = 0; i < filesArr.length; i++) {
   // for (let i = 0; i < 2000; i++) {
   // Current production tribbles
-  for (let i = 2000; i < 3000; i++) {
+  for (let i = 9000; i < filesArr.length; i++) {
     const file = filesArr[i]
 
     if (file.indexOf('.png') !== -1) {

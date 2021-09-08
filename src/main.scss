@@ -7,10 +7,25 @@ html {
   box-sizing: inherit;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+body {
+  font-size: 14px;
+  font-family: Rockwell, Consolas, Georgia, Times, 'Times New Roman', serif;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul, a {
   margin: 0;
   padding: 0;
   font-weight: normal;
+  color: #fff;
+}
+
+a:hover {
+  color: #ddd;
+}
+
+sub {
+  font-size: .875rem;
+  vertical-align: baseline;
 }
 
 ol, ul {
@@ -22,27 +37,96 @@ img {
   height: auto;
 }
 
-#wrapper {
+@keyframes glowing {
+  0% {
+    background-color: #d23cff;
+    box-shadow: 0 0 2px #d036ff;
+  }
+  50% {
+    background-color: #9215b8;
+    box-shadow: 0 0 15px #ac1cd8;
+  }
+  100% {
+    background-color: #d23cff;
+    box-shadow: 0 0 2px #d036ff;
+  }
+}
+
+button {
+  border: 1px #fff solid;
+  color: #fff;
+  background: transparent;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+button.important {
+  font-weight: bold;
+  animation: glowing 2s ease-in-out infinite;
+}
+
+button.inline {
+  margin: 0px 4px;
+}
+
+.c {
+  text-align: center;
+}
+
+.info > * {
+  margin-top: 15px;
+}
+
+#wrapper, #top {
   display: flex;
+  flex-direction: row;
+}
+
+#display {
+  width: 300px;
+  height: 300px;
+  border: 1px solid;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px #000 solid;
+}
+
+#details {
+  margin-top: 15px;
+}
+
+#top, #bottom {
+  width: 100%;
+}
+
+#bottom {
+  border-top: 1px solid #333;
 }
 
 #cvWrap {
-  max-width: calc(100vw - 300px);
   overflow: auto;
+  // overflow-y: hidden;
+  border-right: 1px solid #333;
+  max-height: 100vh;
+  padding: 10px;
 }
 
 #canvas {
-  border: 1px black solid;
   background-color: #000;
 }
 
 #panel {
-  min-width: 300px;
-  border-left: 1px solid #333;
-  height: 100vh;
-  position: fixed;
-  right: 0px;
+  min-width: 350px;
   overflow: auto;
+  max-height: 100vh;
+  padding: 20px 10px;
+  margin: 0 auto;
 }
 
 /* Landscape */

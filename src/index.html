@@ -3,30 +3,58 @@
 
 <head>
   <meta name="monetization" content="$coil.xrptipbot.com/[COIL-ID-HERE]">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-  
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=.75">
+
   <title>[js13Kgames]</title>
 </head>
 
 <body style="background-color: #111;">
   <div id="wrapper">
-    <div id="cvWrap">
-      <canvas id="canvas" width="1000" height="1000"></canvas>
-    </div>
-    <div>
+    <div id="top">
+      <div id="cvWrap"><canvas id="canvas" width="1000" height="1000"></canvas></div>
       <div id="panel">
-        <button id="login" style="display: block; margin-top: 15px;">LOGIN</button>
-        <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button>
-        <!-- <label for="tid">Account to Claim Token:</label>
-        <input type="text" style="display: block; margin-top: 15px;" id="acct" placeholder="Token ID" /> -->
-        <label for="tid">Token ID:</label>
-        <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" />
-        <button id="claim" style="display: block; margin-top: 15px;">CLAIM</button>
-        <button id="view" style="display: block; margin-top: 15px;">VIEW</button>
+        <h1 class="c">Need <sub>to</sub> Find <sub>the</sub> Tribbles</h1>
+        <div id="display"></div>
+        <div id="details">
+          <div class="c info" id="trib">
+            <h2>You Found a Tribble!!</h2>
+            <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
+            <button id="claim" class="important">CLAIM TRIBBLE</button>
+            <p>ID: Tribble_R1_361-823</p>
+            <p><a href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json" target="_blank">Metadata on IPFS from NFT.storage</a></p>
+            <p><a href="https://ipfs.io/ipfs/bafybeidvqna4qkowxzzcqhg6kdzdazvoeyuerp2ag4johd7ueeevmb4gze/Tribble_R1_526-890.png" target="_blank">Image on IPFS from NFT.storage</a></p>
+          </div>
+          <br /><br /><br /><br />
+          <div class="c info" id="auth">
+            <p>You'll need to log in to collect tribbles!</p>
+            <p>This dapp runs on the <a href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account" target="_blank">Near testnet</a>,
+            <br />
+            which is free to sign up and use!</p>
+            <p>Get an account at:
+            <br />
+            <a href="https://wallet.testnet.near.org"/>https://wallet.testnet.near.org/</a>
+            </p>
+            <p>
+            Or <button id="login" class="inline">LOGIN</button>
+            </p>
+            <p><button id="logout">LOGOUT</button>
+            </p>
+          </div>
+        </div>
+
+        <!-- <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button> -->
+        <!-- <label for="tid">Token ID:</label>
+        <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" /> -->
+        <!-- <button id="claim" style="display: block; margin-top: 15px;">CLAIM</button> -->
       </div>
     </div>
   </div>
-  <script src="https://js13kgames.com/src/near-api-js.js" type="text/javascript"></script>
+  <div id="bottom">
+
+  </div>
+  <script src="https://js13kgames.com/src/near-api-js.js" type="text/javascript" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.9/runtime.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/lib/alea.min.js" type="text/javascript"></script>
 </body>
 
 </html>

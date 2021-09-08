@@ -3,7 +3,13 @@ import LineByLineReader from 'line-by-line'
 import fs from 'fs'
 import { exec } from 'child_process'
 
-const lr = new LineByLineReader('mint_calls_1631123304633.txt')
+/**
+ * Run with node ./mint-nfts.js
+ */
+// In progress: mint_calls_1631124576652-7-8k.txt
+// In progress: mint_calls_1631124613529-8-9k.txt
+// In progress: mint_calls_1631124642952-9-End.txt
+const lr = new LineByLineReader('mint_calls_1631124642952-9-End.txt')
 const retryCallsArr = []
 let lineNum = 0
 
@@ -33,11 +39,9 @@ lr.on('line', function (line) {
       console.log('-- EXEC ERROR for', _line)
       console.log(`${err}`)
     }
-  })
 
-  setTimeout(() => {
     lr.resume()
-  }, 2000)
+  })
   // 'line' contains the current line without the trailing newline character.
 })
 
@@ -46,9 +50,14 @@ lr.on('end', function () {
 
   console.log(retryCallsArr)
 
-  const d = new Uint8Array(Buffer.from(retryCallsArr.join('\r\n')))
+  if (retryCallsArr.length) {
+    const d = new Uint8Array(Buffer.from(retryCallsArr.join('\r\n')))
 
-  fs.writeFile(`mint_calls_retry_${Date.now()}.txt`, d, () => {
-    console.log('Done!')
-  })
+    fs.writeFile(`mint_calls_retry_${Date.now()}.txt`, d, () => {
+      console.log('Done!')
+    })
+  }
+  else {
+    console.log('No errors! Huzzah!')
+  }
 })

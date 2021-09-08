@@ -16,6 +16,7 @@ module.exports = merge(common, {
     port: 8080,
     // Enable this host if you need to access this from another device, like for mobile testing:
     host: '0.0.0.0',
+    https: true,
   },
   module: {
     rules: [

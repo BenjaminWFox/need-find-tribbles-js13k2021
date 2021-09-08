@@ -36,7 +36,7 @@ export async function viewNFT(id) {
   console.log(id, account, contract)
 
   const result = await contract.get_token({
-    token_id: id, // Tribble_Gen1_0-779
+    token_id: id,
   })
 
   console.log('Token Result', result)
@@ -88,7 +88,7 @@ export async function doNearStuff() {
       'need-find-tribbles-js13k.testnet',
       {
       // name of contract you're connecting to
-      // viewMethods: ['getMessages'], // view methods do not change state but usually return a value
+        viewMethods: ['get_token'], // view methods do not change state but usually return a value
         changeMethods: ['nft_reassign_ownership'], // change methods modify state
         sender: account, // account object to initialize and sign transactions.
       },

@@ -1,25 +1,55 @@
 import './main.scss'
-import 'regenerator-runtime'
+// import 'regenerator-runtime'
 import { doNearStuff, signIn, signOut, claimNFT, viewNFT } from './near'
+import C from './constants'
+
 /**
- * Imported in `index.html` - https://js13kgames.com/src/near-api-js.js
- * Near API JS Documentation: https://docs.near.org/docs/develop/front-end/near-api-js
- *
+ * Imported in `index.html` -
+ * Near API: https://js13kgames.com/src/near-api-js.js
+ *  - Near API JS Documentation: https://docs.near.org/docs/develop/front-end/near-api-js
+ * Johannes Baagøe's Alea PRNG: https://github.com/davidbau/seedrandom
  */
 
-/* eslint-disable */
-/**
- * Johannes Baagøe's Alea PRNG:
- */
-!function(n,t,e){function u(n){var t=this,e=function(){var s=4022871197;return function(n){n=String(n);for(var t=0;t<n.length;t++){var e=.02519603282416938*(s+=n.charCodeAt(t));e-=s=e>>>0,s=(e*=s)>>>0,s+=4294967296*(e-=s)}return 2.3283064365386963e-10*(s>>>0)}}();t.next=function(){var n=2091639*t.s0+2.3283064365386963e-10*t.c;return t.s0=t.s1,t.s1=t.s2,t.s2=n-(t.c=0|n)},t.c=1,t.s0=e(" "),t.s1=e(" "),t.s2=e(" "),t.s0-=e(n),t.s0<0&&(t.s0+=1),t.s1-=e(n),t.s1<0&&(t.s1+=1),t.s2-=e(n),t.s2<0&&(t.s2+=1),e=null}function o(n,t){return t.c=n.c,t.s0=n.s0,t.s1=n.s1,t.s2=n.s2,t}function s(n,t){var e=new u(n),s=t&&t.state,r=e.next;return r.int32=function(){return 4294967296*e.next()|0},r.double=function(){return r()+11102230246251565e-32*(2097152*r()|0)},r.quick=r,s&&("object"==typeof s&&o(s,e),r.state=function(){return o(e,{})}),r}t&&t.exports?t.exports=s:e&&e.amd?e(function(){return s}):window.alea=s}(0,"object"==typeof module&&module,"function"==typeof define&&define);
-/* eslint-enable */
-
-export function randomIntInclusive(min, max) { // min and max included
+function randomIntInclusive(min, max) { // min and max included
   return Math.floor((Math.random() * (max - min + 1)) + min)
 }
 
-export function randomIntFromTuple(arr) { // min and max included
-  return Math.floor((Math.random() * (arr[1] - arr[0] + 1)) + arr[0])
+// function randomIntFromTuple(arr) { // min and max included
+//   return Math.floor((Math.random() * (arr[1] - arr[0] + 1)) + arr[0])
+// }
+
+const util = {
+  getRandomKeyPoint: () => {
+    const zoneKeys = Object.keys(keyZones)
+
+    const i = randomIntInclusive(0, zoneKeys.length)
+
+    return zoneKeys[i]
+  },
+  getTribbleId: (keyPoints) => {
+    return `${C.TRIBBLE_PREFIX}${keyPoints}`
+  },
+  getTribblePreview: (keyPoints) => {
+    return `${C.TRIBBLE_PREVIEW_URL}${C.TRIBBLE_PREFIX}${keyPoints}${C.TRIBBLE_SUFFIX}`
+  },
+  showTribble: async (keyPoints) => {
+    const tribbleId = util.getTribbleId(keyPoints)
+    const tribblePreview = util.getTribblePreview(keyPoints)
+
+    document.getElementById('display').innerHTML = `<img src="${tribblePreview}" />`
+
+    // const tResponse = await fetch('https://rest.nearapi.org/view_nft', {
+    //   method: 'POST',
+    //   body: {
+    //     token_id: tribbleId,
+    //     contract: 'need-find-tribbles-js13k.testnet',
+    //   },
+    //   headers: { 'Content-Type': 'application/json' },
+    // })
+    const data = await viewNFT(tribbleId)
+
+    console.log(data)
+  },
 }
 const dims = 1000
 const map = []
@@ -110,7 +140,7 @@ window.onload = async () => {
   const loginBtn = document.getElementById('login')
   const logoutBtn = document.getElementById('logout')
   const claimBtn = document.getElementById('claim')
-  const viewBtn = document.getElementById('view')
+  // const viewBtn = document.getElementById('view')
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
 
@@ -118,6 +148,9 @@ window.onload = async () => {
   canvas.height = dims
   canvas.addEventListener('mousedown', function (e) {
     getCursorPosition(canvas, e)
+    const p = util.getRandomKeyPoint()
+
+    util.showTribble(p)
   })
   loginBtn.addEventListener('click', () => signIn())
   logoutBtn.addEventListener('click', () => signOut())
@@ -128,11 +161,11 @@ window.onload = async () => {
     claimNFT(id)
   })
 
-  viewBtn.addEventListener('click', (e) => {
-    const id = document.getElementById('tid').value
+  // viewBtn.addEventListener('click', (e) => {
+  //   const id = document.getElementById('tid').value
 
-    viewNFT(id)
-  })
+  //   viewNFT(id)
+  // })
 
   colorCanvas(ctx)
 
