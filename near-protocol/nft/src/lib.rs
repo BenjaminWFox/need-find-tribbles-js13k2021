@@ -100,31 +100,23 @@ impl Contract {
         self.tokens.nft_tokens(std::option::Option::default(), std::option::Option::default())
     }
 
-    // pub fn get_nft(&mut self, token_id: TokenId) -> Option<Token> {
-    //     self.tokens.nft_token(token_id)
-    // }
-
-    // fn nft_token_test(&mutself, token_id: TokenId) -> Option<Token> {
-    //     let owner_id = self.tokens.owner_by_id.get(&token_id)?;
-    //     let metadata = self.tokens.token_metadata_by_id.and_then(|by_id| by_id.get(&token_id));
-    //     let approved_account_ids = self
-    //         .tokens
-    //         .approvals_by_id
-    //         .and_then(|by_id| by_id.get(&token_id).or_else(|| Some(HashMap::new())));
-    //     Some(Token { token_id, owner_id, metadata, approved_account_ids })
-    // }
+    pub fn nft_transfer_free(
+        &mut self,
+        receiver_id: ValidAccountId,
+        token_id: TokenId,
+        approval_id: Option<u64>,
+        memo: Option<String>,
+    ) {
+        let sender_id = env::predecessor_account_id();
+        self.tokens.internal_transfer(&sender_id, receiver_id.as_ref(), &token_id, approval_id, memo);
+    }
 
     #[payable]
     pub fn nft_reassign_ownership(&mut self, token_id: TokenId, new_token_owner_id: ValidAccountId) -> String {
-        // let owner_id = self.tokens.owner_by_id.get(&token_id)?;
-
-        // if owner_id.to_string() == "need-find-tribbles-js13k.testnet" {
-        //     self.tokens.nft_transfer(new_token_owner_id, token_idZ, Some(0001), Some("Congrats on finding and claiming this Tribble!!".to_owned()));
-        // }
         match self.tokens.owner_by_id.get(&token_id) {
             Some(owner_id) => {
                 if owner_id.to_string() == "need-find-tribbles-js13k.testnet" {
-                    self.tokens.nft_transfer(new_token_owner_id, token_id, Some(0001), Some("Congrats on finding and claiming this Tribble!!".to_owned()));
+                    self.nft_transfer_free(new_token_owner_id, token_id, Some(0001), Some("Congrats on finding and claiming this Tribble!!".to_owned()));
 
                     return "Success: token was transferred to new owner.".to_owned()
                 }
@@ -136,10 +128,6 @@ impl Contract {
                 return "Failure: could not find the requested token.".to_owned()
             }
         }
-        /*
-            near call $ID nft_reassign_ownership '{"token_id": "Tribble_Gen1_1-265", "new_token_owner_id": "bwf-js13k-2021.testnet"}' --accountId $ID --gas 100000000000000 --deposit 20
-
-        */
     }
 }
 

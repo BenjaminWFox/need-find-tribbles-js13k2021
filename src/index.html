@@ -15,14 +15,13 @@
     </div>
     <div>
       <div id="panel">
-        <div id="debug" style="padding: 15px; color: #fff">
-          <input type="file" id="upload" name="imgUpload" />
-          <input type="text" id="name" placeholder="Filename" />
-          <input type="text" id="desc" placeholder="Description" />
-          <input type="submit" id="submit" />
-        </div>
-        <button id="login">LOGIN</button>
-        <button id="logout">LOGOUT</button>
+        <button id="login" style="display: block; margin-top: 15px;">LOGIN</button>
+        <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button>
+        <label for="tid">Account to Claim Token:</label>
+        <input type="text" style="display: block; margin-top: 15px;" id="acct" placeholder="Token ID" />
+        <label for="tid">Token ID:</label>
+        <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" />
+        <button id="claim" style="display: block; margin-top: 15px;">CLAIM</button>
       </div>
     </div>
   </div>
