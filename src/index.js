@@ -1,6 +1,6 @@
 import './main.scss'
 import 'regenerator-runtime'
-import { doNearStuff, signIn, signOut, claimNFT } from './near'
+import { doNearStuff, signIn, signOut, claimNFT, viewNFT } from './near'
 /**
  * Imported in `index.html` - https://js13kgames.com/src/near-api-js.js
  * Near API JS Documentation: https://docs.near.org/docs/develop/front-end/near-api-js
@@ -105,13 +105,12 @@ function getCursorPosition(canvas, event) {
 window.onload = async () => {
   console.log('NEARAPI', window.nearApi)
 
-  const { wallet, contract, account } = await doNearStuff()
-
-  console.log(wallet)
+  await doNearStuff()
 
   const loginBtn = document.getElementById('login')
   const logoutBtn = document.getElementById('logout')
   const claimBtn = document.getElementById('claim')
+  const viewBtn = document.getElementById('view')
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
 
@@ -120,13 +119,19 @@ window.onload = async () => {
   canvas.addEventListener('mousedown', function (e) {
     getCursorPosition(canvas, e)
   })
-  loginBtn.addEventListener('click', () => signIn(wallet))
-  logoutBtn.addEventListener('click', () => signOut(wallet))
+  loginBtn.addEventListener('click', () => signIn())
+  logoutBtn.addEventListener('click', () => signOut())
   claimBtn.addEventListener('click', (e) => {
     const id = document.getElementById('tid').value
-    const acct = document.getElementById('acct').value
+    // const acct = document.getElementById('acct').value
 
-    claimNFT(id, account, contract, acct)
+    claimNFT(id)
+  })
+
+  viewBtn.addEventListener('click', (e) => {
+    const id = document.getElementById('tid').value
+
+    viewNFT(id)
   })
 
   colorCanvas(ctx)

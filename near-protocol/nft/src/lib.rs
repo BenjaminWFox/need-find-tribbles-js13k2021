@@ -107,15 +107,26 @@ impl Contract {
         approval_id: Option<u64>,
         memo: Option<String>,
     ) {
-        let sender_id = env::predecessor_account_id();
-        self.tokens.internal_transfer(&sender_id, receiver_id.as_ref(), &token_id, approval_id, memo);
+        self.tokens.internal_transfer(&self.tokens.owner_id.clone(), receiver_id.as_ref(), &token_id, approval_id, memo);
     }
 
+    // near call $ID get_token '{"token_id": "Tribble_Gen1_1-265"}' --accountId $ID
+    pub fn get_token(self, token_id: TokenId) -> Option<Token> {
+        return self.tokens.nft_token(token_id)
+    }
+
+    // near call $ID get_total_tokens --accountId $ID
+    // Note the token account has 19 additional (Gen1, not R1) tokens
+    pub fn get_total_tokens(self) -> U128 {
+        self.tokens.nft_total_supply()
+    }
+
+    // near call $ID nft_reassign_ownership '{"token_id": "Tribble_Gen1_1-265", "new_token_owner_id": "bwf-js13k-2021.testnet"}' --accountId $ID
     #[payable]
     pub fn nft_reassign_ownership(&mut self, token_id: TokenId, new_token_owner_id: ValidAccountId) -> String {
         match self.tokens.owner_by_id.get(&token_id) {
             Some(owner_id) => {
-                if owner_id.to_string() == "need-find-tribbles-js13k.testnet" {
+                if owner_id == "need-find-tribbles-js13k.testnet" {
                     self.nft_transfer_free(new_token_owner_id, token_id, Some(0001), Some("Congrats on finding and claiming this Tribble!!".to_owned()));
 
                     return "Success: token was transferred to new owner.".to_owned()
@@ -129,6 +140,10 @@ impl Contract {
             }
         }
     }
+
+    // Deploy/Test
+    // ./build.sh
+    // near deploy --wasmFile res/non_fungible_token.wasm --accountId $ID
 }
 
 near_contract_standards::impl_non_fungible_token_core!(Contract, tokens);

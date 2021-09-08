@@ -16,6 +16,7 @@
     "dotenv": "^10.0.0",
     "line-by-line": "^0.1.6",
     "nft.storage": "^3.2.0",
+    "node-fetch": "^3.0.0",
     "stream-to-array": "^2.3.0",
     "uuid": "^8.3.2"
   }
