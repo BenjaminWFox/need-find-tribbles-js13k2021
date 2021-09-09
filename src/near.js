@@ -25,6 +25,7 @@ export const signOut = () => {
 export async function claimNFT() {
   const id = UI.$i('tid').innerHTML
 
+  UI.setDataFetching(true)
   UI.$i('claim').disabled = true
 
   console.log(id, account, contract)
@@ -46,6 +47,8 @@ export async function claimNFT() {
   else {
     UI.$i('claim').disabled = false
   }
+
+  UI.setDataFetching(false)
 
   /**
    * This can be enabled if tokens show up for a given user.

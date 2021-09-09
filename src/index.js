@@ -154,9 +154,10 @@ const util = {
     }
     else {
       console.log(`x: ${ x } y: ${ y}`)
-      // await util.showTribble(key)
-
       // TESTING:
+      // const found = await util.showTribble(util.getRandomKeyPoint())
+
+      // LIVE:
       const found = await util.showTribble(key)
 
       if (!found) {
@@ -181,9 +182,9 @@ const util = {
 }
 
 const addHotCoords = (n, j, i) => {
-  if (n > 504 && n < 515) {
-    keyZones[`${j}-${i}`] = true
-  }
+  // if (n > 504 && n < 515) {
+  //   keyZones[`${j}-${i}`] = true
+  // }
   if (n > 600 && n < 700) {
     gearZones[`${j}-${i}`] = true
   }
