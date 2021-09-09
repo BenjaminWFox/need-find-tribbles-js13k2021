@@ -19,16 +19,14 @@
               <h2>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h2>
               <div class="info">
                 <p>Please Help! Tribbles are taking over!</p>
-                <p>At last count there were 10,048 of them throughout the galaxy, but with a million places to hide
-                  they're hard to find!</p>
-                <p>You can find them by clicking around the star map...if you find one before anyone else, it's your to
-                  keep!</p>
-                <p>If you want to keep it, though, you'll have to create an account to keep track!</p>
+                <p>At last count there were 10,048 of them, but with a million places to hide they're hard to find!</p>
+                <p>Clicking around the star map to find tribbles and more!</p>
                 <hr />
                 <p>All tribbles are one-of-a-kind NFTs!</p>
+                <p>If you find one before anyone else, it's your to keep, you'll have to create an account.</p>
                 <p>This dapp runs on the <a
                     href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account"
-                    target="_blank">Near testnet</a>, it's quick and free to sign up and use!
+                    target="_blank">Near testnet</a>, which is free to use!
                 </p>
                 <p>Sign up for an account at:
                   <br />
@@ -57,6 +55,7 @@
             class="textlike" onclick="fn.signOut()">Sign Out</button></p>
 
         <div id="display">
+          <img id="" src="https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/stuffed-tribble.png" />
         </div>
 
         <div id="details" class="empty">
@@ -116,7 +115,7 @@
             </div>
 
             <!-- <div id="sicContent"> -->
-              <div class="info sic" id="intro">
+              <div class="info sic" id="nomatch">
                 <h2>Across the Universe!</h2>
                 <p>Oooh the vast emptiness.</p>
                 <p>There's nothing here, keep searching!</p>
@@ -140,6 +139,11 @@
                 <p id="otherText">Who can say, but what it once was it is now not and never will be again.</p>
               </div>
 
+              <div class="info sic" id="space">
+                <h2>Ooh, neat!</h2>
+                <p id="spaceText">Who can say, but what it once was it is now not and never will be again.</p>
+              </div>
+
               <div class="info trib sic" id="trib">
                 <h2>You Found a Tribble!!</h2>
                 <span id="tid">Tribble_R1_361-823</span>
@@ -153,14 +157,11 @@
             <!-- </div> -->
 
           </div>
-          <div class="info">
-            <hr />
-            <h3>View:</h3>
-            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles you've collected in
-                your NEAR wallet!</a></p>
-            <h3>Share:</h3>
-            <p><a id="tweet" class="twitter-share-button" target="_blank" href="">
-                Twitter</a></p>
+          <div class="info" id="more">
+            <h3>More!</h3>
+            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles NFTs you collected can be viewed in your NEAR wallet!</a></p>
+            <p><a id="tweet" class="twitter-share-button" target="_blank" href="">Share on Twitter</a></p>
+            <button class="textlike">About this Game</button>
           </div>
 
         </div>

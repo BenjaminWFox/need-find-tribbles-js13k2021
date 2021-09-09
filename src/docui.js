@@ -181,7 +181,7 @@ export const setDisplay = (type, content = '') => {
       break
     case 'other':
       // eslint-disable-next-line
-      const inner = `<img src="${content}" />` || 'Something ancient and long forgotten hangs in the void...'
+      const inner = `<img src="${content}" style="max-width: 260px; max-height: 260px;" />` || 'Something ancient and long forgotten hangs in the void...'
 
       state.searchContent.displayContent = `<div class="dText">${inner}</div>`
       state.searchContent.displayImage = content
@@ -191,6 +191,10 @@ export const setDisplay = (type, content = '') => {
       break
     case 'tribble':
       state.searchContent.displayContent = `<img src="${content}" />`
+      state.searchContent.displayImage = content
+      break
+    case 'space':
+      state.searchContent.displayContent = `<img src="${content}" style="max-width: 260px; max-height: 260px;" />`
       state.searchContent.displayImage = content
       break
     case 'stuffed':

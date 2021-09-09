@@ -21,6 +21,7 @@ const t = dims - l
 const keyZones = {}
 const gearZones = {}
 const otherZones = {}
+const spaceZones = {}
 
 function randomIntInclusive(min, max) { // min and max included
   return Math.floor((Math.random() * (max - min + 1)) + min)
@@ -92,7 +93,7 @@ const util = {
   },
   checkClickedPixel: async ({ x, y, key }) => {
     UI.setDataFetching(true)
-    UI.setDetails('clear')
+    // UI.setDetails('clear')
     UI.setTab('sI')
 
     if (!C.GEAR['stuffed-tribble']) {
@@ -122,6 +123,33 @@ const util = {
         UI.$i('otherText').innerHTML = 'Who can say, but what it once was it is now not and never will be again.'
         console.log('Error fetching rick and morty data.')
         UI.setDetails('other', null)
+      }
+    }
+    else if (spaceZones[key]) {
+      console.log('space zone!')
+      const query = ['planet', 'star', 'nebula', 'galaxy']
+      const rApi = randomIntInclusive(0, 3)
+      const rPage = randomIntInclusive(1, 3)
+      const response = await fetch(`https://images-api.nasa.gov/search?media_type=image&q=${query[rApi]}&page=${rPage}`)
+
+      console.log(response)
+      try {
+
+        const result = await response.json()
+
+        console.log(result)
+        const idx = randomIntInclusive(0, result.collection.items.length - 1)
+        const entry = result.collection.items[idx]
+        const image = entry.links[0].href
+        const { title, nasa_id } = entry.data[0]
+
+        console.log('Fetch random nasa stuff!', nasa_id, title, image)
+        UI.setDetails('space', image)
+        UI.$i('spaceText').innerHTML = `${title}.<br/><br/><a href="https://images-assets.nasa.gov/image/${nasa_id}/metadata.json" target="_blank">Read more from NASA<a/>!`
+      }
+      catch (e) {
+        console.log('Unable to fetch!', e)
+        UI.setDetails('empty')
       }
     }
     else {
@@ -162,6 +190,9 @@ const addHotCoords = (n, j, i) => {
   if (n > 800 && n < 900) {
     otherZones[`${j}-${i}`] = true
   }
+  if (n > 200 && n < 500) {
+    spaceZones[`${j}-${i}`] = true
+  }
 }
 
 const getColor = (a, b) => {
@@ -199,6 +230,7 @@ const colorCanvas = (ctx) => {
   console.log('Key Zones', Object.keys(keyZones).length) // 10048
   console.log('Gear Zones', Object.keys(gearZones).length) // 98464
   console.log('Other Zones', Object.keys(otherZones).length) // 99027
+  console.log('Other Zones', Object.keys(spaceZones).length) // 99027
 
   // If required, reenable to get filenames for all tokens:
   // console.log(keyStr)
@@ -256,5 +288,5 @@ window.onload = async () => {
 
   colorCanvas(ctx)
 
-  console.log('Complete', keyZones, Object.keys(gearZones).length, Object.keys(otherZones).length)
+  // console.log('Complete', keyZones, Object.keys(gearZones).length, Object.keys(otherZones).length)
 }

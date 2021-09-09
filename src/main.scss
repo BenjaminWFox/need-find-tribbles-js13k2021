@@ -64,6 +64,8 @@ button {
   background: transparent;
   padding: 10px 12px;
   cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
 }
 button.textlike {
   border: none;
@@ -188,6 +190,11 @@ button.inline {
   max-height: 400px;
   overflow-y: auto;
 }
+#more {
+  padding: 10px;
+  border: 1px #000 solid;
+  margin-top: 20px;
+}
 
 #gC > ul > li {
 
@@ -270,6 +277,8 @@ button.inline {
   overflow: hidden;
   max-height: 1025px;
   padding: 20px 10px;
+  overflow-y: auto;
+  min-width: 350px;
 }
 
 .flex {
@@ -282,7 +291,7 @@ button.inline {
   display: inline-block;
 }
 
-#stuffed, #gear, #trib, #other {
+#stuffed, #gear, #trib, #other, #space {
   display: none;
 }
 
@@ -298,11 +307,15 @@ button.inline {
   display: unset;
 }
 
+#details.space #space  {
+  display: unset;
+}
+
 #details.stuffed #stuffed  {
   display: unset;
 }
 
-#details:not(.empty) #intro {
+#details:not(.empty) #nomatch {
   display: none;
 }
 
