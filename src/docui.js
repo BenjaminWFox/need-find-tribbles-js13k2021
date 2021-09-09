@@ -1,3 +1,5 @@
+import C from './constants'
+import state from './state'
 export const $i = document.getElementById.bind(document)
 
 // const tweens = []
@@ -18,15 +20,115 @@ export const $i = document.getElementById.bind(document)
 
 // loop()
 
+const getGearDetail = (gearStr) => {
+  const [category, id] = gearStr.split('-')
+  const friendly = id.split('_').join(' ')
+
+  return { category, id, friendly }
+}
+
+export const setGearMessage = (gearStr, isNew) => {
+  const { category, id, friendly } = getGearDetail(gearStr)
+
+  $i('gearType').innerHTML = `You found ${friendly}. It's for the ${category}!`
+
+  if (isNew) {
+    $i('gearExtra').innerHTML = 'Something new and fun! Your stuffed tribble will love it!'
+  }
+  else {
+    $i('gearExtra').innerHTML = 'You already have one of these. Oh well, maybe someone else will find it someday!'
+  }
+}
+
+const getGearEls = (id, name, category) => {
+  const li = document.createElement('li')
+  const input = document.createElement('input')
+  const label = document.createElement('label')
+
+  input.type = 'radio'
+  input.id = id
+  input.onclick = function () {
+    setGearImage(this.id, this.parentNode.parentNode.id)
+  }
+  input.name = category
+  label.htmlFor = id
+  label.innerHTML = name
+
+  li.appendChild(input)
+  li.appendChild(label)
+
+  return li
+}
+
+export const setGearImage = (id, pId) => {
+  console.log('setGearImage', id, pId)
+
+  if (id === 'None') {
+    state.gearContent.drawn[pId] = ''
+    drawStuffedTribble()
+  }
+  else {
+    const i = new Image()
+
+    i.src = getGearUrl(`${pId}-${id}`)
+    state.gearContent.drawn[pId] = i
+    i.addEventListener('load', drawStuffedTribble)
+  }
+}
+
+export const drawStuffedTribble = () => {
+  // const canvas = $i('stuffedTribble')
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  canvas.width = 240
+  canvas.height = 240
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(state.gearContent.tribble, 0, 0)
+
+  const gearImgKeys = Object.keys(state.gearContent.drawn)
+
+  console.log('State', state, gearImgKeys)
+
+  gearImgKeys.forEach((key) => {
+    if (state.gearContent.drawn[key]) {
+      console.log('Drawing for', key, state.gearContent.drawn[key])
+      ctx.drawImage(state.gearContent.drawn[key], 0, 0)
+    }
+  })
+
+  $i('display').innerHTML = ''
+  $i('display').appendChild(canvas)
+}
+
+export const setAllGearEls = () => {
+  Object.entries(C.GEAR).forEach(([k, v]) => {
+    if (v && k !== 'stuffed-tribble') {
+      const { category, id, friendly } = getGearDetail(k)
+
+      if (!$i(id)) {
+        const gearEl = getGearEls(id, friendly, category)
+
+        $i(category).appendChild(gearEl)
+      }
+    }
+  })
+}
+
+export const setClassById = (id, str) => {
+  $i(id).className = str
+}
 export const modClassById = (doAdd, id, classStrOrArr) => {
   if (doAdd) {
     $i(id).classList.add(classStrOrArr)
   }
   else {
     if (typeof classStrOrArr !== 'string') {
-      classStrOrArr.forEach((str) => {
-        $i(id).classList.remove(str)
-      })
+      $i(id).classList.remove(...classStrOrArr)
+      // classStrOrArr.forEach((str) => {
+      //   $i(id).classList.remove(str)
+      // })
     }
     else {
       $i(id).classList.remove(classStrOrArr)
@@ -34,35 +136,71 @@ export const modClassById = (doAdd, id, classStrOrArr) => {
   }
 }
 
-/**
- *
- * @param {Enum} content clear | empty | other | gear | tribble
- */
-export const setDetails = (content) => {
-  console.log('Update content', content)
-  modClassById(false, 'details', ['clear', 'empty', 'other', 'gear', 'tribble'])
-  modClassById(true, 'details', content)
-  setDisplay(content)
+export const setTab = (tabId) => {
+  modClassById(false, 'sI', 'sel')
+  modClassById(false, 'tabContent', 'sI')
+  modClassById(false, 'tG', 'sel')
+  modClassById(false, 'tabContent', 'tG')
+  modClassById(true, tabId, 'sel')
+  modClassById(true, 'tabContent', tabId)
+  if (tabId === 'tG') {
+    if (C.GEAR['stuffed-tribble']) {
+      drawStuffedTribble()
+    }
+  }
+  if (tabId === 'sI') {
+    setDisplay(state.searchContent.type, state.searchContent.displayImage)
+  }
 }
 
-export const setDisplay = (content) => {
+/**
+ *
+ * @param {Enum} content clear | empty | other | gear | tribble | stuffed
+ */
+export const setDetails = (type, content) => {
+  console.log('Update content', type, content)
+  // modClassById(false, 'details', ['clear', 'empty', 'other', 'gear', 'tribble'])
+  setClassById('details', type)
+  setDisplay(type, content)
+}
+
+export const setDisplay = (type, content = '') => {
   const d = $i('display')
 
-  switch (content) {
+  console.debug('Setting display type', type, 'with content', content)
+
+  switch (type) {
     default:
     case 'empty':
-      d.innerHTML = '<div class="dText">Nothing here but empty space, for now...</div>'
+      state.searchContent.displayContent = '<div class="dText">Nothing here but empty space, for now...</div>'
       break
     case 'gear':
-      d.innerHTML = '<div class="dText">Remnants of tribbles line strewn about, but where have they gone...</div>'
+      // state.searchContent.displayContent = '<div class="dText">Remnants of tribbles line strewn about, but where have they gone...</div>'
+      state.searchContent.displayContent = `<img src="${content}" />`
+      state.searchContent.displayImage = content
       break
     case 'other':
-      d.innerHTML = '<div class="dText">Something ancient and long forgotten hangs in the void...</div>'
+      // eslint-disable-next-line
+      const inner = `<img src="${content}" />` || 'Something ancient and long forgotten hangs in the void...'
+
+      state.searchContent.displayContent = `<div class="dText">${inner}</div>`
+      state.searchContent.displayImage = content
       break
     case 'clear':
-      d.innerHTML = '<div class="dClear dText"></div>'
+      state.searchContent.displayContent = '<div class="dClear dText"></div>'
+      break
+    case 'tribble':
+      state.searchContent.displayContent = `<img src="${content}" />`
+      state.searchContent.displayImage = content
+      break
+    case 'stuffed':
+      state.searchContent.displayContent = `<img src="${content}" />`
+      state.searchContent.displayImage = content
       break
   }
+
+  state.searchContent.type = type
+  d.innerHTML = state.searchContent.displayContent
 }
 
 export const setSigninData = (account) => {
@@ -71,11 +209,15 @@ export const setSigninData = (account) => {
   setOverlay(false)
 }
 
-export const setGearData = async (gear) => {
-  const gearImage = `https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/${gear}.png`
-
-  $i('display').innerHTML = `<img src="${gearImage}" />`
+export const getGearUrl = (gear) => {
+  return `https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/${gear}.png`
 }
+
+// export const setGearData = async (gear) => {
+//   const gearImage = getGearUrl(gear)
+
+//   $i('display').innerHTML = `<img src="${gearImage}" />`
+// }
 
 export const setTribbleData = async (data, tribbleImg) => {
   const md = data.metadata
@@ -95,7 +237,7 @@ export const setTribbleData = async (data, tribbleImg) => {
   $i('tid').innerHTML = data.token_id
   $i('ipfsmeta').href = ipfsMetaUrl
   // $i('ipfsimg').href = ipfsImgUrl
-  $i('display').innerHTML = `<img src="${tribbleImg}" />`
+  // $i('display').innerHTML = `<img src="${tribbleImg}" />`
 }
 
 export const setDataFetching = (isFetching) => {

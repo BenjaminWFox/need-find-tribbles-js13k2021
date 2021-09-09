@@ -42,7 +42,8 @@
               </div>
             </div>
           </div>
-          <button id="close" class="yauth" style="position: absolute; top: 5px; right: 5px;" onclick="fn.closeOverlay()">X</button>
+          <button id="close" class="yauth" style="position: absolute; top: 5px; right: 5px;"
+            onclick="fn.closeOverlay()">X</button>
         </div>
         <canvas id="canvas" width="1000" height="1000"></canvas>
       </div>
@@ -52,41 +53,116 @@
           No account detected -
           <button class="textlike" onclick="fn.signIn()">Sign Up/Sign In</button>
         </p>
-        <p class="smtext yauth"><span id="cAcct">Account: need-find-tribbles-js13k.testnet</span> - <button class="textlike"
-            onclick="fn.signOut()">Sign Out</button></p>
-        <div id="display"></div>
+        <p class="smtext yauth"><span id="cAcct">Account: need-find-tribbles-js13k.testnet</span> - <button
+            class="textlike" onclick="fn.signOut()">Sign Out</button></p>
+
+        <div id="display">
+        </div>
+
         <div id="details" class="empty">
-          <div class="info" id="stuffed">
-            <h2>You Found a Stuffed Tribble!</h2>
-            <p>Not as colorful as a real tribble, and not an NFT, but you can dress it up with other gear you find!</p>
+          <div class="tabs">
+            <div onclick="fn.setTab(this.id)" id="sI" class="sel">Search Info</div>
+            <div onclick="fn.setTab(this.id)" id="tG" class="">Tribble Gear</div>
           </div>
-          <div class="info" id="gear">
-            <h2>You Found Tribble Gear</h2>
-            <p id="gearType">A X_Y for the Z</p>
-          </div>
-          <div class="info trib" id="trib">
-            <h2>You Found a Tribble!!</h2>
-            <span id="tid">Tribble_R1_361-823</span>
-            <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
-            <button
-              id="claim"
-              onclick="fn.claimNFT()"
-              class="important">CLAIM TRIBBLE</button>
-            <br />
-            <p><a id="ipfsmeta"
-              href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json"
-              target="_blank">See metadata from NFT.storage via IPFS</a></p>
+          <div id="tabContent" class="sI">
+            <div class="info tgc">
+              <h2>Your Collection</h2>
+              <p>Just because it's a stuffed tribble, doesn't mean you love it any less!</p>
+              <p>Dress up your stuffed tribble with any gear you find!</p>
+              <div id="gC">
+                <ul>
+                  <li>
+                    <h3>Hair</h3>
+                    <ul id="hair">
+                      <li><input type="radio" id="None"
+                          onclick="fn.setGearImage(this.id, this.parentNode.parentNode.id)" name="hair" /><label
+                          for="None">None</label></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h3>Eyes</h3>
+                    <ul id="eyes">
+                      <li><input type="radio" id="None"
+                          onclick="fn.setGearImage(this.id, this.parentNode.parentNode.id)" name="eyes" /><label
+                          for="None">None</label></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h3>Face</h3>
+                    <ul id="face">
+                      <li><input type="radio" id="None"
+                          onclick="fn.setGearImage(this.id, this.parentNode.parentNode.id)" name="face" /><label
+                          for="None">None</label></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h3>Mouth</h3>
+                    <ul id="mouth">
+                      <li><input type="radio" id="None"
+                          onclick="fn.setGearImage(this.id, this.parentNode.parentNode.id)" name="mouth" /><label
+                          for="None">None</label></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h3>Feet</h3>
+                    <ul id="feet">
+                      <li><input type="radio" id="None"
+                          onclick="fn.setGearImage(this.id, this.parentNode.parentNode.id)" name="feet" /><label
+                          for="None">None</label></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- <div id="sicContent"> -->
+              <div class="info sic" id="intro">
+                <h2>Across the Universe!</h2>
+                <p>Oooh the vast emptiness.</p>
+                <p>There's nothing here, keep searching!</p>
+                <p>The tribbles are out there but there are only 10,048 in total, so they can be hard to find.</p>
+              </div>
+
+              <div class="info sic" id="stuffed">
+                <h2>You Found a Stuffed Tribble!</h2>
+                <p>You can dress it up with gear you find!</p>
+                <p>This tribble, and any gear, isn't an NFT, and will only be stored in your browser.</p>
+              </div>
+
+              <div class="info sic" id="gear">
+                <h2>Tribble Gear!</h2>
+                <p id="gearType"></p>
+                <p id="gearExtra"></p>
+              </div>
+
+              <div class="info sic" id="other">
+                <h2>What was it?</h2>
+                <p id="otherText">Who can say, but what it once was it is now not and never will be again.</p>
+              </div>
+
+              <div class="info trib sic" id="trib">
+                <h2>You Found a Tribble!!</h2>
+                <span id="tid">Tribble_R1_361-823</span>
+                <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
+                <button id="claim" onclick="fn.claimNFT()" class="important">CLAIM TRIBBLE</button>
+                <br />
+                <p><a id="ipfsmeta"
+                    href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json"
+                    target="_blank">See metadata from NFT.storage via IPFS</a></p>
+              </div>
+            <!-- </div> -->
+
           </div>
           <div class="info">
             <hr />
             <h3>View:</h3>
-            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles you've collected in your NEAR wallet!</a></p>
+            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles you've collected in
+                your NEAR wallet!</a></p>
             <h3>Share:</h3>
-            <p><a id="tweet" class="twitter-share-button"
-              target="_blank"
-              href="">
-            Twitter</a></p>  
+            <p><a id="tweet" class="twitter-share-button" target="_blank" href="">
+                Twitter</a></p>
           </div>
+
         </div>
         <!-- <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button> -->
         <!-- <label for="tid">Token ID:</label>

@@ -160,6 +160,50 @@ button.inline {
   padding: 50px;
 }
 
+.tabs {
+  display: flex;
+}
+.tabs > div {
+  width: 50%;
+  text-align: center;
+  border: 1px #000 solid;
+  padding: 15px;
+  background-color: rgb(7, 7, 7);
+  cursor: pointer;
+}
+.tabs > div.sel {
+  border-bottom: none;
+  background-color: #111;
+}
+.sI .tgc {
+  display: none;
+}
+.tG .sic, .tG #sicContent {
+  display: none !important;
+}
+#tabContent {
+  padding: 10px;
+  border: 1px #000 solid;
+  border-top: none;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#gC > ul > li {
+
+}
+#gC > ul > li > ul {
+  margin-bottom: 20px;
+}
+#gC > ul > li > ul > li {
+  padding: 5px;
+  margin: 5px;
+  border: 1px #000 solid;
+}
+#gC label {
+  margin-left: 15px;
+}
+
 #details {
   margin-top: 15px;
 }
@@ -223,8 +267,8 @@ button.inline {
 
 #panel {
   width: 350px;
-  overflow: auto;
-  max-height: 100vh;
+  overflow: hidden;
+  max-height: 1025px;
   padding: 20px 10px;
 }
 
@@ -238,12 +282,28 @@ button.inline {
   display: inline-block;
 }
 
-#trib {
+#stuffed, #gear, #trib, #other {
   display: none;
 }
 
 #details.tribble #trib  {
   display: unset;
+}
+
+#details.gear #gear  {
+  display: unset;
+}
+
+#details.other #other  {
+  display: unset;
+}
+
+#details.stuffed #stuffed  {
+  display: unset;
+}
+
+#details:not(.empty) #intro {
+  display: none;
 }
 
 /* Landscape */

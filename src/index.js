@@ -3,6 +3,7 @@ import './main.scss'
 import { doNearStuff, signIn, signOut, claimNFT, viewNFT } from './near'
 import * as UI from './docui'
 import C from './constants'
+import state from './state'
 
 /**
  * Imported in `index.html` -
@@ -52,8 +53,8 @@ const util = {
 
     if (data) {
       console.log(data)
-      UI.setDetails('tribble')
-      UI.setTribbleData(data, tribblePreview)
+      UI.setDetails('tribble', tribblePreview)
+      UI.setTribbleData(data)
 
       return true
     }
@@ -66,7 +67,8 @@ const util = {
     const gear = keysArr[i]
 
     console.log('Have some gear!', gear, 'Do you have it already?', C.GEAR[gear], i, keysArr.length)
-    UI.setGearData(gear)
+
+    UI.setDetails('gear', UI.getGearUrl(gear))
 
     if (!C.GEAR[gear]) {
       window.localStorage.setItem(gear, 'true')
@@ -74,40 +76,60 @@ const util = {
       C.GEAR[gear] = true
 
       console.log('This is new and fun for dressing up your stuffed tribble!')
+      UI.setGearMessage(gear, true)
     }
     else {
       console.log('You already have one of theses. Maybe someone else will find it someday.')
+      UI.setGearMessage(gear, false)
     }
   },
   giveStuffedTribble: () => {
     console.log('HAVE A STUFFED TRIBBLE!')
-    UI.setGearData('stuffed-tribble')
+    // UI.setGearData('stuffed-tribble')
+    UI.setDetails('stuffed', UI.getGearUrl('stuffed-tribble'))
     C.GEAR['stuffed-tribble'] = true
     window.localStorage.setItem('stuffed-tribble', 'true')
   },
   checkClickedPixel: async ({ x, y, key }) => {
     UI.setDataFetching(true)
     UI.setDetails('clear')
+    UI.setTab('sI')
 
     if (!C.GEAR['stuffed-tribble']) {
-      UI.setDetails('gear')
       util.giveStuffedTribble()
     }
     else if (gearZones[key]) {
       console.log('Gear Zone', x, y)
-      UI.setDetails('gear')
       util.getRandomGear()
+      UI.setAllGearEls()
     }
     else if (otherZones[key]) {
       console.log('Other Zone', x, y)
-      UI.setDetails('other')
+      const cid = randomIntInclusive(0, 670)
+      let content = ''
+
+      try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character/${cid}`)
+        const result = await response.json()
+        const { name, location, species, origin, image } = result
+
+        content = `You found ${name} the ${species}.<br/><br/>`
+        content += origin.name === location.name ? `Lives on ${origin?.name}.` : `Originally from ${origin?.name}, now on ${location?.name}.`
+        UI.$i('otherText').innerHTML = content
+        UI.setDetails('other', image)
+      }
+      catch (err) {
+        UI.$i('otherText').innerHTML = 'Who can say, but what it once was it is now not and never will be again.'
+        console.log('Error fetching rick and morty data.')
+        UI.setDetails('other', null)
+      }
     }
     else {
       console.log(`x: ${ x } y: ${ y}`)
       // await util.showTribble(key)
 
       // TESTING:
-      const found = await util.showTribble(util.getRandomKeyPoint())
+      const found = await util.showTribble(key)
 
       if (!found) {
         UI.setDetails('empty')
@@ -126,6 +148,7 @@ const util = {
     // }
 
     UI.setDataFetching(false)
+    console.log('Click complete', state)
   },
 }
 
@@ -205,6 +228,8 @@ window.onload = async () => {
   console.log('NEARAPI', window.nearApi)
 
   UI.modClassById(false, 'b', 'loading')
+  UI.setAllGearEls()
+  UI.setDetails('empty')
 
   await doNearStuff()
   // const viewBtn = document.getElementById('view')
@@ -216,6 +241,8 @@ window.onload = async () => {
     signOut,
     claimNFT,
     closeOverlay: UI.closeOverlay,
+    setTab: UI.setTab,
+    setGearImage: UI.setGearImage,
   }
 
   canvas.width = dims
@@ -226,8 +253,6 @@ window.onload = async () => {
     // const p = util.getRandomKeyPoint()
     util.checkClickedPixel(pos)
   })
-
-  UI.setDetails('empty')
 
   colorCanvas(ctx)
 
