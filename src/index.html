@@ -8,41 +8,84 @@
   <title>[js13Kgames]</title>
 </head>
 
-<body id="b" style="background-color: #111;">
+<body id="b" style="background-color: #111; opacity: 0;" class="loading">
   <div id="wrapper">
     <div id="top">
-      <div id="cvWrap"><canvas id="canvas" width="1000" height="1000"></canvas></div>
+      <div class="flex"></div>
+      <div id="cvWrap" class="overlaid">
+        <div id="overlay">
+          <div id="content">
+            <div id="about" class="nauth">
+              <h2>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h2>
+              <div class="info">
+                <p>Please Help! Tribbles are taking over!</p>
+                <p>At last count there were 10,048 of them throughout the galaxy, but with a million places to hide
+                  they're hard to find!</p>
+                <p>You can find them by clicking around the star map...if you find one before anyone else, it's your to
+                  keep!</p>
+                <p>If you want to keep it, though, you'll have to create an account to keep track!</p>
+                <hr />
+                <p>All tribbles are one-of-a-kind NFTs!</p>
+                <p>This dapp runs on the <a
+                    href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account"
+                    target="_blank">Near testnet</a>, it's quick and free to sign up and use!
+                </p>
+                <p>Sign up for an account at:
+                  <br />
+                  <a href="https://wallet.testnet.near.org" />https://wallet.testnet.near.org/</a>
+                </p>
+                <p class="split">
+                  <button class="inline nauth" onclick="fn.signIn();">Sign In</button>
+                  <button class="inline yauth" onclick="fn.closeOverlay();">Sign Out</button>
+                  <button class="inline yauth" onclick="fn.closeOverlay();">Search For Tribbles!</button>
+                </p>
+              </div>
+            </div>
+          </div>
+          <button id="close" class="yauth" style="position: absolute; top: 5px; right: 5px;" onclick="fn.closeOverlay()">X</button>
+        </div>
+        <canvas id="canvas" width="1000" height="1000"></canvas>
+      </div>
       <div id="panel">
         <h1>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h1>
-        <p class="smtext nauth">No account detected - <button class="textlike" onclick="_fn.signIn()">Sign In</button></p>
-        <p class="smtext yauth">Account: need-find-tribbles-js13k.testnet - <button class="textlike" onclick="_fn.signOut()">Sign Out</button></p>
+        <p class="smtext nauth">
+          No account detected -
+          <button class="textlike" onclick="fn.signIn()">Sign Up/Sign In</button>
+        </p>
+        <p class="smtext yauth"><span id="cAcct">Account: need-find-tribbles-js13k.testnet</span> - <button class="textlike"
+            onclick="fn.signOut()">Sign Out</button></p>
         <div id="display"></div>
-        <div id="details">
-          <div class="info" id="trib">
+        <div id="details" class="empty">
+          <div class="info" id="stuffed">
+            <h2>You Found a Stuffed Tribble!</h2>
+            <p>Not as colorful as a real tribble, and not an NFT, but you can dress it up with other gear you find!</p>
+          </div>
+          <div class="info" id="gear">
+            <h2>You Found Tribble Gear</h2>
+            <p id="gearType">A X_Y for the Z</p>
+          </div>
+          <div class="info trib" id="trib">
             <h2>You Found a Tribble!!</h2>
             <span id="tid">Tribble_R1_361-823</span>
             <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
-            <button id="claim" onclick="() => { window._fn.claimNFT() }" class="important">CLAIM TRIBBLE</button>
-            <br/><br/>
-            <h3>View:</h3>
-            <p><a href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json" target="_blank">Metadata from NFT.storage via IPFS</a></p>
-            <p><a href="https://ipfs.io/ipfs/bafybeidvqna4qkowxzzcqhg6kdzdazvoeyuerp2ag4johd7ueeevmb4gze/Tribble_R1_526-890.png" target="_blank">Image from NFT.storage via IPFS</a></p>
+            <button
+              id="claim"
+              onclick="fn.claimNFT()"
+              class="important">CLAIM TRIBBLE</button>
+            <br />
+            <p><a id="ipfsmeta"
+              href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json"
+              target="_blank">See metadata from NFT.storage via IPFS</a></p>
           </div>
-          <br /><br /><br /><br />
-          <div class="info" id="auth">
-            <p>You'll need to log in to collect tribbles!</p>
-            <p>This dapp runs on the <a href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account" target="_blank">Near testnet</a>,
-            <br />
-            which is free to sign up and use!</p>
-            <p>Get an account at:
-            <br />
-            <a href="https://wallet.testnet.near.org"/>https://wallet.testnet.near.org/</a>
-            </p>
-            <p>
-            Or <button id="login" class="inline" onclick="_fn.signIn()">LOGIN</button>
-            </p>
-            <p><button id="logout">LOGOUT</button>
-            </p>
+          <div class="info">
+            <hr />
+            <h3>View:</h3>
+            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles you've collected in your NEAR wallet!</a></p>
+            <h3>Share:</h3>
+            <p><a id="tweet" class="twitter-share-button"
+              target="_blank"
+              href="">
+            Twitter</a></p>  
           </div>
         </div>
         <!-- <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button> -->
@@ -50,6 +93,7 @@
         <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" /> -->
         <!-- <button id="claim" style="display: block; margin-top: 15px;">CLAIM</button> -->
       </div>
+      <div class="flex"></div>
     </div>
   </div>
   <div id="bottom">

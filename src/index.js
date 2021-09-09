@@ -1,6 +1,7 @@
 import './main.scss'
 // import 'regenerator-runtime'
 import { doNearStuff, signIn, signOut, claimNFT, viewNFT } from './near'
+import * as UI from './docui'
 import C from './constants'
 
 /**
@@ -9,6 +10,16 @@ import C from './constants'
  *  - Near API JS Documentation: https://docs.near.org/docs/develop/front-end/near-api-js
  * Johannes Baagøe's Alea PRNG: https://github.com/davidbau/seedrandom
  */
+
+const dims = 1000
+const map = []
+const arng = new alea('hello.')
+const opts = [0, 50, 100, 150, 200, 225, 250]
+const l = opts.length - 1
+const t = dims - l
+const keyZones = {}
+const gearZones = {}
+const otherZones = {}
 
 function randomIntInclusive(min, max) { // min and max included
   return Math.floor((Math.random() * (max - min + 1)) + min)
@@ -37,31 +48,86 @@ const util = {
   showTribble: async (keyPoints) => {
     const tribbleId = util.getTribbleId(keyPoints)
     const tribblePreview = util.getTribblePreview(keyPoints)
-
-    document.getElementById('display').innerHTML = `<img src="${tribblePreview}" />`
-
-    // const tResponse = await fetch('https://rest.nearapi.org/view_nft', {
-    //   method: 'POST',
-    //   body: {
-    //     token_id: tribbleId,
-    //     contract: 'need-find-tribbles-js13k.testnet',
-    //   },
-    //   headers: { 'Content-Type': 'application/json' },
-    // })
     const data = await viewNFT(tribbleId)
 
-    console.log(data)
+    if (data) {
+      console.log(data)
+      UI.setDetails('tribble')
+      UI.setTribbleData(data, tribblePreview)
+
+      return true
+    }
+
+    return false
+  },
+  getRandomGear: () => {
+    const keysArr = Object.keys(C.GEAR)
+    const i = randomIntInclusive(0, keysArr.length - 1)
+    const gear = keysArr[i]
+
+    console.log('Have some gear!', gear, 'Do you have it already?', C.GEAR[gear], i, keysArr.length)
+    UI.setGearData(gear)
+
+    if (!C.GEAR[gear]) {
+      window.localStorage.setItem(gear, 'true')
+
+      C.GEAR[gear] = true
+
+      console.log('This is new and fun for dressing up your stuffed tribble!')
+    }
+    else {
+      console.log('You already have one of theses. Maybe someone else will find it someday.')
+    }
+  },
+  giveStuffedTribble: () => {
+    console.log('HAVE A STUFFED TRIBBLE!')
+    UI.setGearData('stuffed-tribble')
+    C.GEAR['stuffed-tribble'] = true
+    window.localStorage.setItem('stuffed-tribble', 'true')
+  },
+  checkClickedPixel: async ({ x, y, key }) => {
+    UI.setDataFetching(true)
+    UI.setDetails('clear')
+
+    if (!C.GEAR['stuffed-tribble']) {
+      UI.setDetails('gear')
+      util.giveStuffedTribble()
+    }
+    else if (gearZones[key]) {
+      console.log('Gear Zone', x, y)
+      UI.setDetails('gear')
+      util.getRandomGear()
+    }
+    else if (otherZones[key]) {
+      console.log('Other Zone', x, y)
+      UI.setDetails('other')
+    }
+    else {
+      console.log(`x: ${ x } y: ${ y}`)
+      // await util.showTribble(key)
+
+      // TESTING:
+      const found = await util.showTribble(util.getRandomKeyPoint())
+
+      if (!found) {
+        UI.setDetails('empty')
+      }
+      // Temp owned by benjaminwfox.testnet
+      // await util.showTribble('787-902')
+      // await util.showTribble('208-918')
+      // await util.showTribble('727-370')
+
+      // Owned by bwftestacct-1
+      // Tribble_R1_668-627
+    }
+
+    // if (keyZones[key]) {
+    //   console.log('!!KEY ZONE!!', x, y)
+    // }
+
+    UI.setDataFetching(false)
   },
 }
-const dims = 1000
-const map = []
-const arng = new alea('hello.')
-const opts = [0, 50, 100, 150, 200, 225, 250]
-const l = opts.length - 1
-const t = dims - l
-const keyZones = {}
-const gearZones = {}
-const otherZones = {}
 
 const addHotCoords = (n, j, i) => {
   if (n > 504 && n < 515) {
@@ -117,45 +183,51 @@ const colorCanvas = (ctx) => {
 
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
+  const x = Math.floor(event.clientX - rect.left)
+  const y = Math.floor(event.clientY - rect.top)
 
-  if (keyZones[`${x}-${y}`]) {
-    console.log('!!KEY ZONE!!', x, y)
-  }
-  else if (gearZones[`${x}-${y}`]) {
-    console.log('Gear Zone', x, y)
-  }
-  else if (otherZones[`${x}-${y}`]) {
-    console.log('Other Zone', x, y)
-  }
-  else {
-    console.log(`x: ${ x } y: ${ y}`)
-  }
+  return { x, y, key: `${x}-${y}` }
+}
+
+function initLocalStorage() {
+  const gearArr = Object.keys(C.GEAR)
+
+  gearArr.forEach((key) => {
+    if (window.localStorage.getItem(key)) {
+      C.GEAR[key] = true
+    }
+  })
 }
 
 window.onload = async () => {
+  initLocalStorage()
+
   console.log('NEARAPI', window.nearApi)
+
+  UI.modClassById(false, 'b', 'loading')
 
   await doNearStuff()
   // const viewBtn = document.getElementById('view')
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
 
-  window._fn = {
+  window.fn = {
     signIn,
     signOut,
     claimNFT,
+    closeOverlay: UI.closeOverlay,
   }
 
   canvas.width = dims
   canvas.height = dims
   canvas.addEventListener('mousedown', function (e) {
-    getCursorPosition(canvas, e)
-    const p = util.getRandomKeyPoint()
+    const pos = getCursorPosition(canvas, e)
 
-    util.showTribble(p)
+    // const p = util.getRandomKeyPoint()
+    util.checkClickedPixel(pos)
   })
+
+  UI.setDetails('empty')
 
   colorCanvas(ctx)
 

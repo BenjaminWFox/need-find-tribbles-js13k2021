@@ -96,6 +96,7 @@ impl Contract {
         self.tokens.mint(token_id, token_owner_id, Some(token_metadata))
     }
 
+    // near call $ID test_get_account_tokens --accountId $ID
     pub fn test_get_account_tokens(& self) -> Vec<Token> {
         self.tokens.nft_tokens(std::option::Option::default(), std::option::Option::default())
     }

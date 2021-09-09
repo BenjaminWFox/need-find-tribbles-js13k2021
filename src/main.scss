@@ -10,6 +10,11 @@ html {
 body {
   font-size: 14px;
   font-family: Rockwell, Consolas, Georgia, Times, 'Times New Roman', serif;
+  transition: opacity 1s;
+}
+
+body:not(.loading) {
+  opacity: 1 !important;
 }
 
 body, h1, h2, h3, h4, h5, h6, p, ol, ul, a {
@@ -72,6 +77,12 @@ button:hover {
   background-color: #333;
 }
 
+button:disabled, button.important:disabled {
+  animation: none;
+  cursor: none;
+  opacity: .5;
+}
+
 button.important {
   font-weight: bold;
   animation: glowing 2s ease-in-out infinite;
@@ -105,6 +116,11 @@ button.inline {
   font-size: .75rem;
 }
 
+.split {
+  display: flex;
+  justify-content: space-between;
+}
+
 #wrapper, #top {
   display: flex;
   flex-direction: row;
@@ -122,6 +138,28 @@ button.inline {
   border: 1px #000 solid;
 }
 
+@keyframes pulse {
+  0% {
+    background: #222;
+  }
+  50% {
+    background: #000;
+  }
+  100% {
+    background: #222;
+  }
+}
+
+.dClear {
+  width: 100%;
+  height: 100%;
+  animation: pulse .5s ease-in-out infinite;
+}
+
+.dText {
+  padding: 50px;
+}
+
 #details {
   margin-top: 15px;
 }
@@ -135,11 +173,48 @@ button.inline {
 }
 
 #cvWrap {
+  position: relative;
   overflow: auto;
-  // overflow-y: hidden;
   border-right: 1px solid #333;
   max-height: 100vh;
   padding: 10px;
+}
+
+#cvWrap.overlaid {
+  overflow-x: hidden;
+}
+
+#cvWrap.overlaid #overlay {
+  display: flex;
+}
+
+#overlay {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  min-height: 1025px;
+  background-color: rgba(90, 90, 90, .75);
+  display: none;
+  justify-content: center;
+}
+
+#content {
+  position: relative;
+  top: 20px;
+  max-width: 50%;
+  max-height: 50%;
+}
+
+#content h2 {
+  font-size: 2rem;
+}
+
+#about .info {
+  max-width: 275px;
+  min-width: 150px;
+  margin: 0 auto;
 }
 
 #canvas {
@@ -147,17 +222,28 @@ button.inline {
 }
 
 #panel {
-  min-width: 350px;
+  width: 350px;
   overflow: auto;
   max-height: 100vh;
   padding: 20px 10px;
-  margin: 0 auto;
+}
+
+.flex {
+  flex-grow: 1;
 }
 
 #tid {
   font-weight: 600;
   font-style: italic;
   display: inline-block;
+}
+
+#trib {
+  display: none;
+}
+
+#details.tribble #trib  {
+  display: unset;
 }
 
 /* Landscape */
