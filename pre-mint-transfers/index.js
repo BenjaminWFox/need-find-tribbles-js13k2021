@@ -182,15 +182,15 @@ const processFiles = async () => {
   }
 
   /**
-   * To run: npm start ../../tribble-generator/node/out
+   * // This relied on having pre-generated tribble PNG files in the `out` directory of another node project.
+   * 
+   * To run this: npm start ../tribble-gen/node/out
    *
    * Note the token account has 19 additional (Gen1, not R1) tokens
    */
 
-  // for (let i = 0; i < filesArr.length; i++) {
-  // for (let i = 0; i < 2000; i++) {
-  // Current production tribbles
-  for (let i = 9000; i < filesArr.length; i++) {
+  // Production tribbles generation
+  for (let i = 0; i < filesArr.length; i++) {
     const file = filesArr[i]
 
     if (file.indexOf('.png') !== -1) {
