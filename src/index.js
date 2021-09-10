@@ -129,7 +129,7 @@ const util = {
     }
     else if (spaceZones[key]) {
       console.log('space zone!')
-      const query = ['planet', 'star', 'nebula', 'galaxy']
+      const query = ['planet', 'nebula', 'galaxy', 'beautiful']
       const rApi = randomIntInclusive(0, 3)
       const rPage = randomIntInclusive(1, 3)
       const response = await fetch(`https://images-api.nasa.gov/search?media_type=image&q=${query[rApi]}&page=${rPage}`)

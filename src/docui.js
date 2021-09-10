@@ -253,16 +253,16 @@ export const setOverlay = (isShown) => {
 }
 
 export const showAbout = () => {
-  modClassById(true, 'cvWrap', 'showAbout')
-  setOverlay(true)
+  setClassById('cvWrap', 'showAbout overlaid')
+  // setOverlay(true)
 }
 
 export const showFoundTribble = () => {
-  modClassById(true, 'cvWrap', 'showFoundTribble')
-  setOverlay(true)
+  setClassById('cvWrap', 'showFoundTribble overlaid')
+  // setOverlay(true)
 }
 
 export const showBackTribbles = () => {
-  modClassById(true, 'cvWrap', 'showBackTribbles')
-  setOverlay(true)
+  setClassById('cvWrap', 'showBackTribbles overlaid')
+  // setOverlay(true)
 }

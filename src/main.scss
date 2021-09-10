@@ -98,7 +98,7 @@ button.inline {
   display: unset;
 }
 
-.yauth {
+.yauth, .yauthB {
   display: none;
 }
 
@@ -106,7 +106,19 @@ button.inline {
   display: unset;
 }
 
+.authd .yauthB {
+  display: block;
+}
+
 .authd .nauth {
+  display: none;
+}
+
+#cvWrap.overlaid #presignin {
+  display: none;
+}
+
+body.authd #presignin {
   display: none;
 }
 
@@ -262,7 +274,7 @@ button.inline {
   overflow-x: hidden;
 }
 
-#cvWrap.overlaid #overlay {
+#cvWrap.overlaid #overlay, body:not(.authd) #overlay {
   display: flex;
 }
 
