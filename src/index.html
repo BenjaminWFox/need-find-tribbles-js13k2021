@@ -15,15 +15,52 @@
       <div id="cvWrap" class="overlaid">
         <div id="overlay">
           <div id="content">
-            <div id="about" class="nauth">
+            <div id="about">
+              <h2>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h2>
+              <div class="info">
+                <p>This is a decentralized application (dApp) created by for the 2021 js13k games competition by <a
+                    href="https://benjaminwfox.com" target="_blank">Benjamin Fox</a>.</p>
+
+                <p>It makes use of the <a href="https://near.org/" target="_blank">NEAR Protocol</a> for on-chain
+                  storage of NFT metadata - all the information for each tribble.</p>
+
+                <p>Long-term off-chain storage of images is provided by <a href="https://nft.storage/"
+                    target="_blank">nft.storage</a>. Images for quick-access storage are stored in an <a
+                    href="https://aws.amazon.com/s3/" target="_blank">AWS S3 Bucket</a>.</p>
+
+                <p>You can <a href="https://twitter.com/BenjaminWFox" target="_blank">follow me on Twitter</a> in case I
+                  ever tweet anything interesting. Or ever tweet anything at all for that matter.</p>
+                <button onclick="fn.closeOverlay()">CLOSE</button>
+              </div>
+            </div>
+            <div id="foundTribble">
+              <h2>You Found a Tribble!!</h2>
+              <div class="info">
+                <p>They're hard enough to find...wouldn't want you blazing right past it.</p>
+                <p>You can claim it with the button in the right panel if it isn't unowned yes!</p>
+                <p>Since I don't know where you were frantically clicking (I mean, I do, but I'm also lazy) the button
+                  to close this overlay is also in the right panel.</p>
+              </div>
+            </div>
+            <div id="backTribbles">
+              <h2>Tribbles on the MainNet?!</h2>
+              <div class="info">
+                <p>My original plan with this dApp was to publish it to the NEAR MainNet.</p>
+                <p>Then I realized that A) minting over 10k NFTs is not cheap and B) it's very difficult to get NEAR wher I live.</p>
+                <p>I have some ideas to improve and extend these tribble NFTs and the overall experience.</p>
+                <p>Please consider donating some NEAR (benjaminwfox.near) if you'd be excited to see that happen!</p>
+                <button onclick="fn.closeOverlay()">CLOSE</button>
+              </div>
+            </div>
+            <div id="presignin" class="nauth">
               <h2>Need <sub>to</sub> Find <sub>the</sub> Tribbles</h2>
               <div class="info">
                 <p>Please Help! Tribbles are taking over!</p>
                 <p>At last count there were 10,048 of them, but with a million places to hide they're hard to find!</p>
-                <p>Clicking around the star map to find tribbles and more!</p>
+                <p>Click around the star map and you can find tribbles as well as other fun things!</p>
                 <hr />
                 <p>All tribbles are one-of-a-kind NFTs!</p>
-                <p>If you find one before anyone else, it's your to keep, you'll have to create an account.</p>
+                <p>If you find one before anyone else it's your to keep but you'll need to create an account.</p>
                 <p>This dapp runs on the <a
                     href="https://docs.near.org/docs/develop/basics/create-account#creating-a-testnet-account"
                     target="_blank">Near testnet</a>, which is free to use!
@@ -34,8 +71,6 @@
                 </p>
                 <p class="split">
                   <button class="inline nauth" onclick="fn.signIn();">Sign In</button>
-                  <button class="inline yauth" onclick="fn.closeOverlay();">Sign Out</button>
-                  <button class="inline yauth" onclick="fn.closeOverlay();">Search For Tribbles!</button>
                 </p>
               </div>
             </div>
@@ -55,7 +90,8 @@
             class="textlike" onclick="fn.signOut()">Sign Out</button></p>
 
         <div id="display"></div>
-        <div id="loading"><img id="spinner" src="https://js13k-2021-tribbles-other.s3.us-west-2.amazonaws.com/tribble-spinner.png" /></div>
+        <div id="loading"><img id="spinner"
+            src="https://js13k-2021-tribbles-other.s3.us-west-2.amazonaws.com/tribble-spinner.png" /></div>
 
         <div id="details" class="empty">
           <div class="tabs">
@@ -114,60 +150,63 @@
             </div>
 
             <!-- <div id="sicContent"> -->
-              <div class="info sic" id="nomatch">
-                <h2>Across the Universe!</h2>
-                <p>Oooh the vast emptiness.</p>
-                <p>There's nothing here, keep searching!</p>
-                <p>The tribbles are out there but there are only 10,048 in total, so they can be hard to find.</p>
-              </div>
+            <div class="info sic" id="nomatch">
+              <h2>Across the Universe!</h2>
+              <p>Oooh the vast emptiness.</p>
+              <p>There's nothing here, keep searching!</p>
+              <p>The tribbles are out there but there are only 10,048 in total, so they can be hard to find.</p>
+            </div>
 
-              <div class="info sic" id="stuffed">
-                <h2>You Found a Stuffed Tribble!</h2>
-                <p>You can dress it up with gear you find!</p>
-                <p>This tribble, and any gear, isn't an NFT, and will only be stored in your browser.</p>
-              </div>
+            <div class="info sic" id="stuffed">
+              <h2>You Found a Stuffed Tribble!</h2>
+              <p>You can dress it up with gear you find!</p>
+              <p>This tribble, and any gear you find, aren't NFTs. They'll only be stored here in your browser.</p>
+            </div>
 
-              <div class="info sic" id="gear">
-                <h2>Tribble Gear!</h2>
-                <p id="gearType"></p>
-                <p id="gearExtra"></p>
-              </div>
+            <div class="info sic" id="gear">
+              <h2>Tribble Gear!</h2>
+              <p id="gearType"></p>
+              <p id="gearExtra"></p>
+            </div>
 
-              <div class="info sic" id="other">
-                <h2>What was it?</h2>
-                <p id="otherText">Who can say, but what it once was it is now not and never will be again.</p>
-              </div>
+            <div class="info sic" id="other">
+              <h2>What was it?</h2>
+              <p id="otherText">Who can say, but what it once was it is now not and never will be again.</p>
+            </div>
 
-              <div class="info sic" id="space">
-                <h2>Ooh, neat!</h2>
-                <p id="spaceText">Who can say, but what it once was it is now not and never will be again.</p>
-              </div>
+            <div class="info sic" id="space">
+              <h2>Ooh, neat!</h2>
+              <p id="spaceText">Who can say, but what it once was it is now not and never will be again.</p>
+            </div>
 
-              <div class="info trib sic" id="trib">
-                <h2>You Found a Tribble!!</h2>
-                <span id="tid">Tribble_R1_361-823</span>
-                <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
+            <div class="info trib sic" id="trib">
+              <h2>You Found a Tribble!!</h2>
+              <span id="tid">Tribble_R1_361-823</span>
+              <div id="status">This tribble is <span id="ownership">currently unowned!</span></div>
+              <div id="claimGroup">
                 <button id="claim" onclick="fn.claimNFT()" class="important">CLAIM TRIBBLE</button>
-                <br />
-                <p><a id="ipfsmeta"
-                    href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json"
-                    target="_blank">See metadata from NFT.storage via IPFS</a></p>
+                <button id="closeClaim" class="yauth" onclick="fn.closeOverlay()">CLOSE OVERLAY</button>
               </div>
+              <br />
+              <p><a id="ipfsmeta"
+                  href="https://ipfs.io/ipfs/bafyreiabq7jwgz6ufmhwo7pvzftxpullxsoduaxu6ozrqdelia3iqrruwy/metadata.json"
+                  target="_blank">See metadata from NFT.storage via IPFS</a></p>
+            </div>
             <!-- </div> -->
 
           </div>
           <div class="info" id="more">
             <h3>More!</h3>
-            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">Tribbles NFTs you collected can be viewed in your NEAR wallet!</a></p>
-            <p><a id="tweet" class="twitter-share-button" target="_blank" href="">Share on Twitter</a></p>
-            <button class="textlike">About this Game</button>
+            <p><a href="https://wallet.testnet.near.org/?tab=collectibles" target="_blank">View your NEAR wallet</a>
+              (this is where tribbles you've collected hang out!)</p>
+            <p><a id="tweet" class="twitter-share-button" target="_blank"
+                href="https://twitter.com/intent/tweet?text=Check out %27Need to Find Tribbles%27 - A hunt for %23NFT Tribbles by @benjaminwfox for the %23js13k game comp.">Share
+                on Twitter</a></p>
+            <p><button class="textlike yauth" onclick="fn.showAbout()">About this Game</button></p>
+            <p><button class="textlike yauth" onclick="fn.showBackTribbles()">Back Tribbles to MainNet</button></p>
           </div>
 
         </div>
-        <!-- <button id="logout" style="display: block; margin-top: 15px;">LOGOUT</button> -->
-        <!-- <label for="tid">Token ID:</label>
-        <input type="text" style="display: block; margin-top: 15px;" id="tid" placeholder="Token ID" /> -->
-        <!-- <button id="claim" style="display: block; margin-top: 15px;">CLAIM</button> -->
       </div>
       <div class="flex"></div>
     </div>

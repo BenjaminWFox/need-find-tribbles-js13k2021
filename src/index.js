@@ -54,6 +54,7 @@ const util = {
 
     if (data) {
       console.log(data)
+      UI.showFoundTribble()
       UI.setDetails('tribble', tribblePreview)
       UI.setTribbleData(data)
 
@@ -64,7 +65,8 @@ const util = {
   },
   getRandomGear: () => {
     const keysArr = Object.keys(C.GEAR)
-    const i = randomIntInclusive(0, keysArr.length - 1)
+    // -2 because we don't need to include the stuffed tribble.
+    const i = randomIntInclusive(0, keysArr.length - 2)
     const gear = keysArr[i]
 
     console.log('Have some gear!', gear, 'Do you have it already?', C.GEAR[gear], i, keysArr.length)
@@ -273,9 +275,11 @@ window.onload = async () => {
     signIn,
     signOut,
     claimNFT,
-    closeOverlay: UI.closeOverlay,
+    closeOverlay: () => UI.setOverlay(false),
     setTab: UI.setTab,
     setGearImage: UI.setGearImage,
+    showAbout: UI.showAbout,
+    showBackTribbles: UI.showBackTribbles,
   }
 
   canvas.width = dims

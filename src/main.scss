@@ -278,18 +278,37 @@ button.inline {
   justify-content: center;
 }
 
+#about, #foundTribble, #backTribbles {
+  display: none;
+}
+
+.showAbout #about, .showFoundTribble #foundTribble, .showBackTribbles #backTribbles {
+  display: unset;
+}
+
+.showFoundTribble #close {
+  display: none;
+}
+
 #content {
   position: relative;
   top: 20px;
-  max-width: 50%;
+  max-width: 60%;
   max-height: 50%;
+}
+
+@media (min-width: 1025px) {
+  #content {
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 #content h2 {
   font-size: 2rem;
 }
 
-#about .info {
+#overlay .info {
   max-width: 275px;
   min-width: 150px;
   margin: 0 auto;
@@ -300,6 +319,7 @@ button.inline {
 }
 
 #panel {
+  position: relative;
   width: 350px;
   overflow: hidden;
   max-height: 1025px;
@@ -316,6 +336,11 @@ button.inline {
   font-weight: 600;
   font-style: italic;
   display: inline-block;
+}
+
+#claimGroup {
+  display: flex;
+  justify-content: space-between;
 }
 
 #stuffed, #gear, #trib, #other, #space {

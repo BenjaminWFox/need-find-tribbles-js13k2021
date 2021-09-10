@@ -249,5 +249,20 @@ export const setDataFetching = (isFetching) => {
 }
 
 export const setOverlay = (isShown) => {
-  modClassById(isShown, 'cvWrap', 'overlaid')
+  !isShown ? setClassById('cvWrap', '') : modClassById(true, 'cvWrap', 'overlaid')
+}
+
+export const showAbout = () => {
+  modClassById(true, 'cvWrap', 'showAbout')
+  setOverlay(true)
+}
+
+export const showFoundTribble = () => {
+  modClassById(true, 'cvWrap', 'showFoundTribble')
+  setOverlay(true)
+}
+
+export const showBackTribbles = () => {
+  modClassById(true, 'cvWrap', 'showBackTribbles')
+  setOverlay(true)
 }
