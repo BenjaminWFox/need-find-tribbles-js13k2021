@@ -110,7 +110,9 @@ export const downloadStuffedTribble = () => {
   const url = document.getElementById('stuffedTribbleCanvas').toDataURL('image/png')
   const w = window.open('')
 
+  w.document.write('<title>Tribble!</title>')
   w.document.write(`<img src="${url}"/>`)
+  w.document.close()
 }
 
 export const setAllGearEls = () => {
