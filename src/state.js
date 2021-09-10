@@ -15,7 +15,8 @@ const initialState = {
   },
 }
 
-initialState.gearContent.tribble.src = 'https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/stuffed-tribble.png'
+initialState.gearContent.tribble.crossOrigin = 'anonymous'
+initialState.gearContent.tribble.src = 'https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/stuffed-tribble.png?x-req="testing'
 
 const state = state || {
   ...initialState,

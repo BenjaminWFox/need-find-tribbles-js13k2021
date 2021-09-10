@@ -24,6 +24,10 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul, a {
   color: #fff;
 }
 
+h1 {
+  white-space: nowrap;
+}
+
 a:hover, button.textlike:hover {
   background-color: transparent;
   color: #ddd;
@@ -177,6 +181,28 @@ body.authd #presignin {
   justify-content: center;
   align-items: center;
   border: 1px #000 solid;
+}
+
+#download {
+  position: absolute;
+  top: 325px;
+  display: none;
+}
+
+#download button {
+  padding: 0 8px;
+  margin: 0;
+  width: 64px;
+  height: 48px;
+  border: none;
+}
+
+#download img {
+  width: 100%;
+  height: 100%;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 @keyframes pulse {

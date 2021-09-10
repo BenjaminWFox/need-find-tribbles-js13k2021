@@ -70,17 +70,21 @@ export const setGearImage = (id, pId) => {
   else {
     const i = new Image()
 
+    console.log('Setting for images...')
+
+    i.crossOrigin = 'anonymous'
     i.src = getGearUrl(`${pId}-${id}`)
+    console.log(i)
     state.gearContent.drawn[pId] = i
     i.addEventListener('load', drawStuffedTribble)
   }
 }
 
 export const drawStuffedTribble = () => {
-  // const canvas = $i('stuffedTribble')
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
+  canvas.id = 'stuffedTribbleCanvas'
   canvas.width = 240
   canvas.height = 240
 
@@ -100,6 +104,13 @@ export const drawStuffedTribble = () => {
 
   $i('display').innerHTML = ''
   $i('display').appendChild(canvas)
+}
+
+export const downloadStuffedTribble = () => {
+  const url = document.getElementById('stuffedTribbleCanvas').toDataURL('image/png')
+  const w = window.open('')
+
+  w.document.write(`<img src="${url}"/>`)
 }
 
 export const setAllGearEls = () => {
@@ -147,9 +158,11 @@ export const setTab = (tabId) => {
     if (C.GEAR['stuffed-tribble']) {
       drawStuffedTribble()
     }
+    $i('download').style.display = 'block'
   }
   if (tabId === 'sI') {
     setDisplay(state.searchContent.type, state.searchContent.displayImage)
+    $i('download').style.display = 'none'
   }
 }
 
@@ -214,7 +227,7 @@ export const setSigninData = (account) => {
 }
 
 export const getGearUrl = (gear) => {
-  return `https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/${gear}.png`
+  return `https://js13k-2021-tribbles-gear.s3.us-west-2.amazonaws.com/${gear}.png?x-req="testing"`
 }
 
 // export const setGearData = async (gear) => {

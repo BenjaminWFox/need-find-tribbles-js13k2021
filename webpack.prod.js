@@ -52,15 +52,16 @@ module.exports = merge(common, {
        *
        * Exact filesize reduction may vary depending on settings used in each.
       */
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
-        minifyURLs: true,
-      },
+      minify: false,
+      // minify: {
+      //   collapseWhitespace: true,
+      //   removeComments: true,
+      //   removeRedundantAttributes: true,
+      //   removeScriptTypeAttributes: true,
+      //   removeStyleLinkTypeAttributes: true,
+      //   useShortDoctype: true,
+      //   minifyURLs: true,
+      // },
     }),
   ],
 })

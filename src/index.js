@@ -108,7 +108,7 @@ const util = {
     }
     else if (otherZones[key]) {
       console.log('Other Zone', x, y)
-      const cid = randomIntInclusive(0, 670)
+      const cid = randomIntInclusive(1, 670)
       let content = ''
 
       try {
@@ -280,6 +280,7 @@ window.onload = async () => {
     setGearImage: UI.setGearImage,
     showAbout: UI.showAbout,
     showBackTribbles: UI.showBackTribbles,
+    downloadStuffedTribble: UI.downloadStuffedTribble,
   }
 
   canvas.width = dims
