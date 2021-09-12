@@ -61,7 +61,7 @@ const getGearEls = (id, name, category) => {
 }
 
 export const setGearImage = (id, pId) => {
-  console.log('setGearImage', id, pId)
+  // console.log('setGearImage', id, pId)
 
   if (id === 'None') {
     state.gearContent.drawn[pId] = ''
@@ -70,11 +70,11 @@ export const setGearImage = (id, pId) => {
   else {
     const i = new Image()
 
-    console.log('Setting for images...')
+    // console.log('Setting for images...')
 
     i.crossOrigin = 'anonymous'
     i.src = getGearUrl(`${pId}-${id}`)
-    console.log(i)
+    // console.log(i)
     state.gearContent.drawn[pId] = i
     i.addEventListener('load', drawStuffedTribble)
   }
@@ -93,11 +93,11 @@ export const drawStuffedTribble = () => {
 
   const gearImgKeys = Object.keys(state.gearContent.drawn)
 
-  console.log('State', state, gearImgKeys)
+  // console.log('State', state, gearImgKeys)
 
   gearImgKeys.forEach((key) => {
     if (state.gearContent.drawn[key]) {
-      console.log('Drawing for', key, state.gearContent.drawn[key])
+      // console.log('Drawing for', key, state.gearContent.drawn[key])
       ctx.drawImage(state.gearContent.drawn[key], 0, 0)
     }
   })
@@ -180,7 +180,7 @@ export const setTab = (tabId) => {
  * @param {Enum} content clear | empty | other | gear | tribble | stuffed
  */
 export const setDetails = (type, content) => {
-  console.log('Update content', type, content)
+  // console.log('Update content', type, content)
   // modClassById(false, 'details', ['clear', 'empty', 'other', 'gear', 'tribble'])
   setClassById('details', type)
   setDisplay(type, content)

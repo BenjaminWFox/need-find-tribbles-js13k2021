@@ -53,7 +53,7 @@ const util = {
     const data = await viewNFT(tribbleId)
 
     if (data) {
-      console.log(data)
+      console.log(' - Tribble zone')
       UI.showFoundTribble()
       UI.setDetails('tribble', tribblePreview)
       UI.setTribbleData(data)
@@ -69,8 +69,6 @@ const util = {
     const i = randomIntInclusive(0, keysArr.length - 2)
     const gear = keysArr[i]
 
-    console.log('Have some gear!', gear, 'Do you have it already?', C.GEAR[gear], i, keysArr.length)
-
     UI.setDetails('gear', UI.getGearUrl(gear))
 
     if (!C.GEAR[gear]) {
@@ -78,16 +76,13 @@ const util = {
 
       C.GEAR[gear] = true
 
-      console.log('This is new and fun for dressing up your stuffed tribble!')
       UI.setGearMessage(gear, true)
     }
     else {
-      console.log('You already have one of theses. Maybe someone else will find it someday.')
       UI.setGearMessage(gear, false)
     }
   },
   giveStuffedTribble: () => {
-    console.log('HAVE A STUFFED TRIBBLE!')
     // UI.setGearData('stuffed-tribble')
     UI.setDetails('stuffed', UI.getGearUrl('stuffed-tribble'))
     C.GEAR['stuffed-tribble'] = true
@@ -95,19 +90,18 @@ const util = {
   },
   checkClickedPixel: async ({ x, y, key }) => {
     UI.setDataFetching(true)
-    // UI.setDetails('clear')
     UI.setTab('sI')
 
     if (!C.GEAR['stuffed-tribble']) {
       util.giveStuffedTribble()
     }
     else if (gearZones[key]) {
-      console.log('Gear Zone', x, y)
+      console.log(' - Gear zone')
       util.getRandomGear()
       UI.setAllGearEls()
     }
     else if (otherZones[key]) {
-      console.log('Other Zone', x, y)
+      console.log(' - Other zone')
       const cid = randomIntInclusive(1, 670)
       let content = ''
 
@@ -123,39 +117,33 @@ const util = {
       }
       catch (err) {
         UI.$i('otherText').innerHTML = 'Who can say, but what it once was it is now not and never will be again.'
-        console.log('Error fetching rick and morty data.')
         UI.setDetails('other', null)
       }
     }
     else if (spaceZones[key]) {
-      console.log('space zone!')
+      console.log(' - Space zone')
       const query = ['planet', 'nebula', 'galaxy', 'beautiful']
       const rApi = randomIntInclusive(0, 3)
       const rPage = randomIntInclusive(1, 3)
       const response = await fetch(`https://images-api.nasa.gov/search?media_type=image&q=${query[rApi]}&page=${rPage}`)
 
-      console.log(response)
       try {
 
         const result = await response.json()
 
-        console.log(result)
         const idx = randomIntInclusive(0, result.collection.items.length - 1)
         const entry = result.collection.items[idx]
         const image = entry.links[0].href
         const { title, nasa_id } = entry.data[0]
 
-        console.log('Fetch random nasa stuff!', nasa_id, title, image)
         UI.setDetails('space', image)
         UI.$i('spaceText').innerHTML = `${title}.<br/><br/><a href="https://images-assets.nasa.gov/image/${nasa_id}/metadata.json" target="_blank">Read more from NASA<a/>!`
       }
       catch (e) {
-        console.log('Unable to fetch!', e)
         UI.setDetails('empty')
       }
     }
     else {
-      console.log(`x: ${ x } y: ${ y}`)
       // TESTING:
       // const found = await util.showTribble(util.getRandomKeyPoint())
 
@@ -163,23 +151,16 @@ const util = {
       const found = await util.showTribble(key)
 
       if (!found) {
+        console.log(' - Empty zone')
         UI.setDetails('empty')
       }
-      // Temp owned by benjaminwfox.testnet
-      // await util.showTribble('787-902')
-      // await util.showTribble('208-918')
-      // await util.showTribble('727-370')
-
-      // Owned by bwftestacct-1
-      // Tribble_R1_668-627
     }
 
     // if (keyZones[key]) {
-    //   console.log('!!KEY ZONE!!', x, y)
     // }
 
+    state.clickCheckInProgress = false
     UI.setDataFetching(false)
-    console.log('Click complete', state)
   },
 }
 
@@ -228,15 +209,9 @@ const colorCanvas = (ctx) => {
     map.push(row)
   }
 
-  const keyStr = Object.keys(keyZones).join(',')
-
-  console.log('Key Zones', Object.keys(keyZones).length) // 10048
-  console.log('Gear Zones', Object.keys(gearZones).length) // 98464
-  console.log('Other Zones', Object.keys(otherZones).length) // 99027
-  console.log('Other Zones', Object.keys(spaceZones).length) // 99027
+  // const keyStr = Object.keys(keyZones).join(',')
 
   // If required, reenable to get filenames for all tokens:
-  // console.log(keyStr)
 }
 
 function getCursorPosition(canvas, event) {
@@ -259,8 +234,6 @@ function initLocalStorage() {
 
 window.onload = async () => {
   initLocalStorage()
-
-  console.log('NEARAPI', window.nearApi)
 
   UI.modClassById(false, 'b', 'loading')
   UI.setAllGearEls()
@@ -289,10 +262,16 @@ window.onload = async () => {
     const pos = getCursorPosition(canvas, e)
 
     // const p = util.getRandomKeyPoint()
-    util.checkClickedPixel(pos)
+    if (!state.clickCheckInProgress) {
+      state.clickCheckInProgress = true
+      console.log('CLICKING...')
+      util.checkClickedPixel(pos)
+    }
+    else {
+      console.log('CAN NOT CLICK')
+    }
   })
 
   colorCanvas(ctx)
 
-  // console.log('Complete', keyZones, Object.keys(gearZones).length, Object.keys(otherZones).length)
 }

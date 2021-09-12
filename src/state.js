@@ -1,4 +1,5 @@
 const initialState = {
+  clickCheckInProgress: false,
   searchContent: {
     displayContent: 'Nothing here but empty space, for now...',
     displayImage: '',
