@@ -6,11 +6,12 @@ import { File } from 'nft.storage'
 function rndIncl(min, max) { // min and max included
   return Math.floor((Math.random() * (max - min + 1)) + min);
 }
+const DIMENSIONS = 24
 const builtCombos = {};
 const bodyDir = 'body';
-const dirBase = '../../notfromterra-js13k2021/design/240';
+const dirBase = `../../design/${DIMENSIONS}`;
 const img = new Canvas.Image();
-const canvas = Canvas.createCanvas(240, 240);
+const canvas = Canvas.createCanvas(DIMENSIONS, DIMENSIONS);
 const ctx = canvas.getContext('2d');
 const attrFiles = {
   eyes: fs.readdirSync(`${dirBase}/eyes`),
@@ -104,8 +105,10 @@ function dataURLtoFile(dataurl, filename) {
 async function start() {
   // let count = 0
 
-  for (const str of fileNamesArr) {
-    const filename = 'Tribble_R1_' + str + '.png'
+  // for (const str of fileNamesArr) {
+  for (let i = 0; i < 50; i += 1) {
+    const str = fileNamesArr[i]
+    const filename = 'Preview_Only_' + str + '.png'
     const layerImages = await getRandomTribble(str);
 
     layerImages.forEach(image => {
@@ -115,7 +118,7 @@ async function start() {
     const dataUrl = canvas.toDataURL();
     const {data, file} = dataURLtoFile(dataUrl, filename)
 
-    fs.writeFile(`./out/${filename}`, data, () => {})
+    fs.writeFile(`./out-preview/${filename}`, data, () => {})
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // count += 1
