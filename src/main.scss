@@ -11,6 +11,7 @@ body {
   font-size: 14px;
   font-family: Rockwell, Consolas, Georgia, Times, 'Times New Roman', serif;
   transition: opacity 1s;
+  user-select: none;
 }
 
 body:not(.loading) {
@@ -365,6 +366,7 @@ body.authd #presignin {
   padding: 20px 10px;
   overflow-y: auto;
   min-width: 350px;
+  user-select: text;
 }
 
 .flex {
