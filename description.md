@@ -4,15 +4,15 @@ Today, nearing the end of the Great Tribble Hunt, only a few of the most unique 
 
 Find them quickly, before they start to multiply again!
 
-The last time we left them alone the Universe was almost overrun...
+The last time we left them alone the universe was almost overrun...
 
 ~~
 
 The Tribbles:
 
-All tribbles are one-of-a-kind NFTs!
+Tribbles are randomly created, one-of-a-kind NFTs!
 
-If you find one before anyone else it's yours to keep!.
+The contract ensures each tribble can only be claimed once, so if you find one before anyone else it's yours forever!
 
 The tribbles live on the NEAR TestNet, so in order to play and collect you'll need an account. It's quick and free to sign up: https://wallet.testnet.near.org/
 
@@ -30,11 +30,13 @@ On the "Tribble Gear" tab you can dress up your stuffed tribble! Create your own
 
 As you explore the universe, you'll also encounter other interesting people and sights!
 
+Desktop provides the best experience, but this should also work on mobile.
+
 ~~
 
 The Decentralization:
 
-This is a decentralized application (dApp) created for the decentralized category! 
+This dApp was created for the js13k 2021 decentralized category!
 
 NEAR Protocol challenge: On-chain storage of NFT metadata - all the information for each tribble - provided via NEAR Protocol: https://near.org/
 
