@@ -348,6 +348,10 @@ body.authd #presignin {
   font-size: 2rem;
 }
 
+#overlay {
+  user-select: text;
+}
+
 #overlay .info {
   max-width: 275px;
   min-width: 150px;
