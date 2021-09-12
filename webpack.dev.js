@@ -13,7 +13,7 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, 'public'),
     historyApiFallback: true,
     publicPath: '/',
-    port: 8080,
+    port: 8081,
     // Enable this host if you need to access this from another device, like for mobile testing:
     host: '0.0.0.0',
     // https: true, // This needs certs to work properly

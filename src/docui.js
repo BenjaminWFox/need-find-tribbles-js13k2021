@@ -107,7 +107,14 @@ export const drawStuffedTribble = () => {
 }
 
 export const downloadStuffedTribble = () => {
-  const url = document.getElementById('stuffedTribbleCanvas').toDataURL('image/png')
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  canvas.width = 300
+  canvas.height = 280
+
+  ctx.drawImage(document.getElementById('stuffedTribbleCanvas'), 20, 20)
+  const url = canvas.toDataURL('image/png')
   const w = window.open('')
 
   w.document.write('<title>Tribble!</title>')
