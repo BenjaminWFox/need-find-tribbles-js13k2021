@@ -1,3 +1,21 @@
+## Need Find Tribbles
+
+This is a js13k games entry for the 2021 Decentralized category.
+
+**It includes:**
+
+Image Storage both in AWS & on [nft.storage](nft.storage)
+- https://github.com/js13kGames/Need-Find-Tribbles/blob/main/pre-mint-transfers/index.js
+
+Bulk minting of NFTs after generating NEAR CLI commands
+- https://github.com/js13kGames/Need-Find-Tribbles/blob/main/pre-mint-transfers/mint-nfts.js
+
+Smart Contract for the NEAR Blockchain
+- https://github.com/BenjaminWFox/need-find-tribbles-js13k2021/blob/main/near-protocol/nft/src/lib.rs
+
+Front-end Game Files
+- https://github.com/js13kGames/Need-Find-Tribbles/tree/main/src
+
 ## Webpack Base for js13kGames
 
 ### Getting started
